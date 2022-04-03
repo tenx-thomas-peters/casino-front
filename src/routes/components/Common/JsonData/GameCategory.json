@@ -1,0 +1,53 @@
+{
+  "title": "Slot Game",
+  "category": [
+    {
+      "title": "money mouse",
+      "background_img": "/images/game/thumbnail01.png"
+    },
+    {
+      "title": "Hercules and Pegasus",
+      "background_img": "/images/game/thumbnail02.png"
+    },
+    {
+      "title": "Aladdin and Sorcerer",
+      "background_img": "/images/game/thumbnail03.png"
+    },
+    {
+      "title": "honey honey honey",
+      "background_img": "/images/game/thumbnail04.png"
+    },
+    {
+      "title": "Tree of Riches",
+      "background_img": "/images/game/thumbnail05.png"
+    },
+    {
+      "title": "5 Lions Gold",
+      "background_img": "/images/game/thumbnail06.png"
+    },
+    {
+      "title": "money mouse",
+      "background_img": "/images/game/thumbnail01.png"
+    },
+    {
+      "title": "Hercules and Pegasus",
+      "background_img": "/images/game/thumbnail02.png"
+    },
+    {
+      "title": "Aladdin and Sorcerer",
+      "background_img": "/images/game/thumbnail03.png"
+    },
+    {
+      "title": "honey honey honey",
+      "background_img": "/images/game/thumbnail04.png"
+    },
+    {
+      "title": "Tree of Riches",
+      "background_img": "/images/game/thumbnail05.png"
+    },
+    {
+      "title": "5 Lions Gold",
+      "background_img": "/images/game/thumbnail06.png"
+    }
+  ]
+}
