@@ -77,18 +77,20 @@ const GameList = () => {
     const location = useLocation();
     const classes = useStyles();
 
+    let res_game_list = [];
+
     const [gameList, setGameList] = useState([]);
     const [vendor, setVendor] = useState('');
+    const [type, setType] = useState('');
 
-    const getGameList = ({vendor}) => {
+    const getGameList = ({vendor}, {type}) => {
+        console.log()
         // TODO
         // game api - /game-list
-        console.log("ddd");
         GameListAPI.getGameList({vendor})
             .then(res => {
                 if (res.status === 200) {
                     setGameList(res.data);
-                    console.log("asss");
                 }
             })
             .catch(function (err) {
@@ -114,8 +116,7 @@ const GameList = () => {
         if (user) {
             // TODO
             // game api - /get-game-url
-            console.log("bbbbbb1");
-            
+
             gameService.post('user/refresh-token?_method=PATCH', {username: user.name})
             // gameService.patch('/user/refresh-token', {params: {username: user.name}})
                 .then(res => {
@@ -168,8 +169,9 @@ const GameList = () => {
     useEffect(() => {
         // let vendor = /vendor=([^&#=]*)/.exec(location.search) ? /vendor=([^&#=]*)/.exec(location.search)[1] : '';
         setVendor(queryString.parse(location.search).vendor);
+        setType(queryString.parse(location.search).type);
 
-        getGameList({vendor});
+        getGameList({vendor}, {type});
     }, [vendor, location.search]);
 
     return (
@@ -183,9 +185,10 @@ const GameList = () => {
             <Box style={{padding: '20px 50px'}}>
                 <GridContainer>
                     {
+                        //filter all lists by slot and baccarat type only
                         gameList.length > 0
                             ?
-                            gameList.map((item, index) => {
+                            gameList.filter(game_data => game_data.type === type).map((item, index) => {
                                 return (
                                     <Grid key={index} item xs={3} sm={2} md={2}>
                                         <Card className={classes.root}>

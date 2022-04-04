@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const GameCards = ({gameType, title, subTitle, url, icon, categoryList}) => {
+const GameCards = ({type, title, subTitle, url, icon, categoryList}) => {
     const classes = useStyles();
     const commonClasses = commonStyles();
 
@@ -36,12 +36,19 @@ const GameCards = ({gameType, title, subTitle, url, icon, categoryList}) => {
         setStyle('');
     };
 
+    /**
+     * Card image for slot game room
+     *
+     * @param item
+     * @param index
+     * @returns {JSX.Element}
+     */
     const renderRow = (item, index) => {
         return (
             <Grid item xs={12} sm={4} md={2} key={index} className={classes.category}>
                 <ImageCard
                     vendor={item.vendor}
-                    type={gameType}
+                    type={type}
                     title={item.title}
                     background_img={item.background_img}
                     style={style}
@@ -90,6 +97,7 @@ const GameCards = ({gameType, title, subTitle, url, icon, categoryList}) => {
                 </Grid>
             </GridContainer>
             <GridContainer>
+                {/* renderRow for slot card */}
                 {categoryList && categoryList.length > 0 ? categoryList.map((item, index) => renderRow(item, index)) : ''}
             </GridContainer>
         </div>
