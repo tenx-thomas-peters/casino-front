@@ -8,8 +8,10 @@ import IntlMessages from '../../../@jumbo/utils/IntlMessages';
 // import {CommonConstants} from "../Common/Constants";
 import GameListAPI from '../../../services/api/apps/gameList';
 import gameService from '../../../services/gameConfig';
+import casinoMoneyAPI from "../../../services/api/apps/casinoMoney";
 import axios from 'axios';
 import {NotificationManager} from 'react-notifications';
+import EventAPI from "../../../services/api/apps/event";
 
 const queryString = require('query-string');
 
@@ -130,6 +132,10 @@ const GameList = () => {
                                 if (res.status === 200) {
                                     console.log(res.data.link);
                                     window.open(res.data.link);
+
+                                    console.log("user");
+                                    console.log(user);
+                                    setCasinoMoney(user);
                                 } else {
                                     NotificationManager.error(res.errors.token, 'Error');
                                 }
@@ -168,7 +174,16 @@ const GameList = () => {
 
     const setCasinoMoney = (user) =>{
 
+        console.log("user.seq");
+        console.log(user.seq);
+        let seq = user.seq;
+        console.log("user.seq");
+        casinoMoneyAPI.syncCasinoMoney(seq)
+            .then(res => {
+                if (res.data.success) {
 
+                }
+            })
     }
 
     useEffect(() => {
