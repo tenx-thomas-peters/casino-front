@@ -173,11 +173,7 @@ const GameList = () => {
     };
 
     const setCasinoMoney = (user) =>{
-
-        console.log("user.seq");
-        console.log(user.seq);
         let seq = user.seq;
-        console.log("user.seq");
         casinoMoneyAPI.syncCasinoMoney(seq)
             .then(res => {
                 if (res.data.success) {

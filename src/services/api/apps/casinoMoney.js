@@ -1,12 +1,10 @@
 import service from '../../config';
 
 const casinoMoneyAPI = {
-    syncCasinoMoney: async ({userSeq}) => {
-        console.log("userSeq");
-        console.log(userSeq);
+    syncCasinoMoney: async ({seq}) => {
         return await service
             .get("syncCasinoMoney",
-            {params: {userSeq: userSeq}
+            {params: {userSeq: seq}
             });
     }
 }
