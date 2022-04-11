@@ -166,6 +166,11 @@ const GameList = () => {
         }
     };
 
+    const setCasinoMoney = (user) =>{
+
+
+    }
+
     useEffect(() => {
         // let vendor = /vendor=([^&#=]*)/.exec(location.search) ? /vendor=([^&#=]*)/.exec(location.search)[1] : '';
         setVendor(queryString.parse(location.search).vendor);
