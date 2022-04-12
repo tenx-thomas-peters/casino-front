@@ -174,7 +174,7 @@ const GameList = () => {
 
     const setCasinoMoney = (user) =>{
         let seq = user.seq;
-        casinoMoneyAPI.syncCasinoMoney(seq)
+        casinoMoneyAPI.syncCasinoMoney({seq})
             .then(res => {
                 if (res.data.success) {
 
