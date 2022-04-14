@@ -63,7 +63,7 @@ const VerticalDefault = ({children}) => {
 
             var intervalHandler = setInterval(() => {
                 getUserInfo();
-            }, 3000);
+            }, 5000);
         // }
 
         // let intervalHandler = setInterval(() => {
