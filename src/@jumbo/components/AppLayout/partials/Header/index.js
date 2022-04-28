@@ -115,6 +115,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
     const [member, setMember] = useState();
     const [noteCounts, setNoteCounts] = useState(0);
     const [moneyAmount, setMoneyAmount] = useState(0);
+    const [casinoMoney, setCasinoMoney] = useState(0);
     const [mileageAmount, setMileageAmount] = useState(0);
 
     const [id, setId] = useState('');
@@ -123,6 +124,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
 
+    let totalMoney = 0;
     useEffect(() => {
         let userInfo = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         if (userInfo) {
@@ -134,6 +136,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
         if (commonInfo) {
             setNoteCounts(commonInfo.noteCounts);
             setMoneyAmount(commonInfo.moneyAmount);
+            setCasinoMoney(commonInfo.casinoMoney);
             setMileageAmount(commonInfo.mileageAmount);
         }
     }, [commonInfo]);
@@ -240,7 +243,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                                     <i className={clsx(classes.user, 'iconfont icon-nsiconkrb')}></i>
                                     <Typography component={'span'} variant={'inherit'} style={{display: 'inline-block', marginLeft: '5px'}}>
                                         <IntlMessages id={'header.amountMoney'}/>
-                                        <span style={{color: '#e8de0d'}}>{moneyAmount ? moneyAmount : 0}</span>&nbsp;
+                                        <span style={{color: '#e8de0d'}}>{!isNaN(moneyAmount+casinoMoney)? moneyAmount+casinoMoney:0 }</span>&nbsp;
                                         <IntlMessages id={"header.money.yen"}/>
                                         <Button variant="contained" color="secondary" className={classes.btn}>
                                             <IntlMessages id={"header.updateMoney"}/>
