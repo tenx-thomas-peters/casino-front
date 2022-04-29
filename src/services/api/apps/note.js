@@ -1,9 +1,10 @@
 import service from '../../config';
 
 const NoteAPI = {
-    getInboxNoteList: async ({type, pageNo, pageSize}) => {
+    getInboxNoteList: async ({userSeq, type, pageNo, pageSize}) => {
         return await service.get('getInboxNoteList', {
             params: {
+                receiver: userSeq,
                 type: type, 
                 pageNo: pageNo,
                 pageSize: pageSize
