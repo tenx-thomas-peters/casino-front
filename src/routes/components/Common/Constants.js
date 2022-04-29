@@ -9,7 +9,7 @@ export const CommonConstants = {
     noteClassificationCustomerService: 4,
     gameTypeSlot: 'slots',
     gameTypeBaccarat: 'baccarat',
-    txtAskSoonTitle: 'account request',
-    txtAskSoonContent: 'Account Request',
+    txtAskSoonTitle: '빠른계좌문의',
+    txtAskSoonContent: '빠른계좌문의',
     apiKey: "Jv49qGTvgDGYZPtTrVSMJpYaNx2NR95W5x3q8E8M"
 };
