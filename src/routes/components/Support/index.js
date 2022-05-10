@@ -126,22 +126,26 @@ const Support = () => {
     };
 
     const getSupportList = (pageNo, pageSize) => {
-        let type = CommonConstants.noteTypePost;
-        let classification = CommonConstants.noteClassificationCustomerService;
-        
+        let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        if (user) {
+            let memberSeq = user.seq;
+            let type = CommonConstants.noteTypePost;
+            let classification = CommonConstants.noteClassificationCustomerService;
 
-        SupportAPI.getSupportList({type, classification, pageNo, pageSize})
-            .then((res) => {
-                if (res.data.success) {
-                    setPageNo(res.data.result.current);
-                    setPageSize(res.data.result.size);
-                    setTotalPage(res.data.result.pages);
-                    setSupportList(res.data.result.records);
-                }
-            })
-            .catch(function (err) {
-                NotificationManager.error(err, 'Error!');
-            });
+
+            SupportAPI.getSupportList({memberSeq, type, classification, pageNo, pageSize})
+                .then((res) => {
+                    if (res.data.success) {
+                        setPageNo(res.data.result.current);
+                        setPageSize(res.data.result.size);
+                        setTotalPage(res.data.result.pages);
+                        setSupportList(res.data.result.records);
+                    }
+                })
+                .catch(function (err) {
+                    NotificationManager.error(err, 'Error!');
+                });
+        }
     };
 
     useEffect(() => {

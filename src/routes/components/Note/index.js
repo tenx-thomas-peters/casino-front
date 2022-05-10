@@ -21,6 +21,7 @@ import IntlMessages from '../../../@jumbo/utils/IntlMessages';
 import clsx from 'clsx';
 import {CommonConstants} from "../Common/Constants";
 import NoteAPI from '../../../services/api/apps/note';
+import {useSelector} from "react-redux";
 
 const items = [
     {
@@ -41,6 +42,7 @@ const items = [
 ];
 
 const Note = () => {
+    const {authUser} = useSelector(({auth}) => auth);
     const classes = useStyles();
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -153,19 +155,23 @@ const Note = () => {
 
     const getInboxNoteList = (pageNo, pageSize) => {
         let type = CommonConstants.noteTypeNote;
+        if (authUser) {
+            let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+            let userSeq = userInfo.seq;
 
-        NoteAPI.getInboxNoteList({type, pageNo, pageSize})
-            .then((res) => {
-                if (res.data.success) {
-                    setPageNo(res.data.result.current);
-                    setPageSize(res.data.result.size);
-                    setTotalPage(res.data.result.pages);
-                    setNoteList(res.data.result.records);
-                }
-            })
-            .catch(function (err) {
-                NotificationManager.error(err, 'Error');
-            });
+            NoteAPI.getInboxNoteList({userSeq, type, pageNo, pageSize})
+                .then((res) => {
+                    if (res.data.success) {
+                        setPageNo(res.data.result.current);
+                        setPageSize(res.data.result.size);
+                        setTotalPage(res.data.result.pages);
+                        setNoteList(res.data.result.records);
+                    }
+                })
+                .catch(function (err) {
+                    NotificationManager.error(err, 'Error');
+                });
+        }
     };
 
     useEffect(() => {
