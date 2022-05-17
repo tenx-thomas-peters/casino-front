@@ -1,4 +1,5 @@
 import service from '../../config';
+import {NotificationManager} from "react-notifications";
 
 const HomeAPI = {
     getHomeInfo: async () => {
@@ -12,6 +13,14 @@ const HomeAPI = {
             // .catch(function (err) {
             //     NotificationManager.error(err, 'Error');
             // });
+    },
+
+    exchangePoint: async ({userSeq}) => {
+        console.log({userSeq});
+        return await service
+            .get("exchangePoint",
+                {params: {userSeq: userSeq}
+                });
     }
 };
 
