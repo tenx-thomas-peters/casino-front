@@ -45,17 +45,23 @@ const JWTAuth = {
                     .get('auth/signin', {params: {loginID: id, password: password}})
                     .then(({data}) => {
                         if (data.success) {
-                            NotificationManager.success(data.message, 'SignIn');
-                            dispatch(fetchSuccess());
-
-                            localStorage.setItem('token', data.result.token);
-                            localStorage.setItem('user', JSON.stringify(data.result.userInfo));
-
-                            // JWTAuth.setCommonInfo(data.result);
-
-                            dispatch(setAuthUser(data.result.userInfo));
-
-                            window.location.href = '/user/home';
+                            let userInfo = JSON.stringify(data.result.userInfo);
+                            if (userInfo.status == 1) {
+                                NotificationManager.success(data.message, 'SignIn');
+                                dispatch(fetchSuccess());
+    
+                                localStorage.setItem('token', data.result.token);
+                                localStorage.setItem('user', JSON.stringify(data.result.userInfo));
+    
+                                // JWTAuth.setCommonInfo(data.result);
+    
+                                dispatch(setAuthUser(data.result.userInfo));
+    
+                                window.location.href = '/user/home';
+                            } else {
+                                alert('정상이 아닌 회원입니다.');
+                                dispatch(fetchError('정상이 아닌 회원입니다.'));
+                            }
                         } else {
                             NotificationManager.error(data.message, 'SignIn');
                             dispatch(fetchError(data.error));

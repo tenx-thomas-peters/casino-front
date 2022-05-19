@@ -189,8 +189,21 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#1e1f21',
         paddingRight: 10,
     },
+    hiddenMd: {
+        '@media screen and (max-width: 1396px)': {
+            display: 'none'
+        }
+    },
     hiddenSm: {
         '@media screen and (max-width: 968px)': {
+            display: 'none'
+        }
+    },
+    showMd: {
+        '@media screen and (max-width: 1396px)': {
+            display: 'inline-block'
+        },
+        '@media screen and (min-width: 1397px)': {
             display: 'none'
         }
     },

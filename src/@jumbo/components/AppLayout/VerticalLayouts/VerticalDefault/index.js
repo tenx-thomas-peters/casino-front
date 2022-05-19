@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import CmtVerticalLayout from '../../../../../@coremat/CmtLayouts/Vertical';
 import CmtHeader from '../../../../../@coremat/CmtLayouts/Vertical/Header';
 import Header from '../../partials/Header';
@@ -14,6 +14,8 @@ import CmtFooter from '../../../../../@coremat/CmtLayouts/Vertical/Footer';
 import Footer from '../../partials/Footer';
 import defaultContext from '../../../contextProvider/AppContextProvider/defaultContext';
 import UserAPI from '../../../../../services/api/users';
+import {AuthMethods} from '../../../../../services/auth';
+import {CurrentAuthMethod} from '../../../../constants/AppConstants';
 
 let layoutOptions = {
     headerType: defaultContext.headerType,
@@ -45,6 +47,16 @@ const VerticalDefault = ({children}) => {
 
         setCommonInfo(localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null);
     };
+
+    // const {authUser} = useSelector(({auth}) => auth);
+    // // dragon_4
+    // useEffect(() => {
+    //     if (authUser != null) {
+    //         alert(authUser.status);
+    //     }
+    //     console.log(authUser);
+    //     // 
+    // }, [authUser]);
 
     useEffect(() => {
         if (location.pathname.indexOf('/user') < 0 && location.pathname !== '/') {

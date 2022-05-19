@@ -2,6 +2,7 @@ import React from 'react';
 import {lighten, makeStyles} from '@material-ui/core/styles';
 import {Card, CardActionArea, CardMedia} from '@material-ui/core';
 import clsx from 'clsx';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -44,7 +45,17 @@ const ImageCard = ({type, vendor, title, background_img, style, changeStyle, cle
 
     const openPopup = (e) => {
         e.preventDefault();
-        window.open('/game?type='+type+'&vendor='+vendor, 'Evolution', 'height='+window.innerHeight+', width='+(window.innerWidth - 200));
+
+        let commonInfo = localStorage.getItem("commonInfo") ? JSON.parse(localStorage.getItem("commonInfo")) : null;
+
+        // dragon_3
+        let keys = Object.keys(commonInfo.baccaratCheck);
+        let key = keys.find(key => key == vendor.toLowerCase());
+        if (key != undefined && commonInfo.baccaratCheck[key] == '1') {
+            window.open('/game?type='+type+'&vendor='+vendor, 'Evolution', 'height='+window.innerHeight+', width='+(window.innerWidth - 200));
+        } else {
+            alert(title + ' was disabled.');
+        }
     };
 
     return (

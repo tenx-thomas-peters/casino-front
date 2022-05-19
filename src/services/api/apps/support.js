@@ -1,12 +1,10 @@
 import service from '../../config';
 
 const SupportAPI = {
-    getSupportList: async ({memberSeq, type, classification, pageNo, pageSize}) => {
-        return await service.get('getNoteList', {
+    getSupportList: async ({memberSeq, pageNo, pageSize}) => {
+        return await service.get('getSupportList', {
             params: {
                 sender: memberSeq,
-                type: type, 
-                classification: classification,
                 pageNo: pageNo,
                 pageSize: pageSize
             }});

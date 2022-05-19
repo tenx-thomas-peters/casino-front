@@ -129,11 +129,8 @@ const Support = () => {
         let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         if (user) {
             let memberSeq = user.seq;
-            let type = CommonConstants.noteTypePost;
-            let classification = CommonConstants.noteClassificationCustomerService;
 
-
-            SupportAPI.getSupportList({memberSeq, type, classification, pageNo, pageSize})
+            SupportAPI.getSupportList({memberSeq, pageNo, pageSize})
                 .then((res) => {
                     if (res.data.success) {
                         setPageNo(res.data.result.current);
