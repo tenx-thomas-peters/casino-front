@@ -114,13 +114,7 @@ export const gameData = {
                 type: 'slot',
                 vendor: 'cq9',
                 background_img: '/images/game/game_category_06.png',
-            },
-            {
-                title: '5 Lions Gold',
-                type: 'slot',
-                vendor: 'toptrend',
-                background_img: '/images/game/game_category_06.png',
-            },
+            }
         ],
         baccarat: [
             {
