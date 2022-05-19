@@ -15,6 +15,11 @@ const UserAPI = {
                     let mileageAmount = result.mileageAmount;
                     let houseMoney = result.houseMoney;
                     let topRanking = result.topRanking;
+                    let inlineNotice = result.inlineNotice;
+                    let popupNotice = result.popupNotice;
+                    // dragon_2
+                    let baccaratCheck = JSON.parse(result.baccaratCheck);
+                    console.log(result);
 
                     const commonInfo = {
                         'jackpotAmount': jackpotAmount,
@@ -23,7 +28,10 @@ const UserAPI = {
                         'casinoMoney': casinoMoney,
                         'mileageAmount': mileageAmount,
                         'houseMoney': houseMoney,
-                        'topRanking': topRanking
+                        'topRanking': topRanking,
+                        'inlineNotice': inlineNotice,
+                        'popupNotice': popupNotice,
+                        'baccaratCheck': baccaratCheck,
                     };
 
                     localStorage.setItem("commonInfo", JSON.stringify(commonInfo));

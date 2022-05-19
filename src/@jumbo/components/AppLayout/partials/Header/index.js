@@ -25,7 +25,6 @@ import {
     MenuItem,
     FormControlLabel,
     Checkbox
-
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import SidebarToggleHandler from '../../../../../@coremat/CmtLayouts/Vertical/SidebarToggleHandler';
@@ -56,9 +55,11 @@ const useStyles = makeStyles(theme => ({
             paddingLeft: 24,
             paddingRight: 24,
         },
+        '@media screen and (max-width: 1550px)': {
+            fontSize: '12px'
+        }
     },
     langRoot: {
-        borderLeft: `solid 1px ${alpha(theme.palette.common.dark, 0.15)}`,
         minHeight: 72,
         display: 'flex',
         alignItems: 'center',
@@ -81,7 +82,8 @@ const useStyles = makeStyles(theme => ({
         color: '#caa516',
         padding: '10px',
         border: '1px solid #715a0a',
-        borderRadius: '20px'
+        borderRadius: '20px',
+        cursor: 'pointer'
     },
     notice: {
         color: '#fff',
@@ -92,6 +94,9 @@ const useStyles = makeStyles(theme => ({
         '&.active': {
             background: '#1e1f21',
         },
+        '@media screen and (max-width: 1700px)': {
+            padding: '5px'
+        }
     },
     user: {
         padding: '12px 15px',
@@ -100,6 +105,10 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '50%',
         color: '#000',
         fontSize: '20px',
+        '@media screen and (max-width: 1700px)': {
+            padding: '4px 7px',
+            fontSize: '15px'
+        }
     },
     box: {
         background: '#1e1f21',
@@ -111,8 +120,11 @@ const useStyles = makeStyles(theme => ({
     },
     btn: {
         marginLeft: '5px',
-        padding: '7px 5px',
-        borderRadius: '30px'
+        padding: '7px 5px !important',
+        borderRadius: '30px !important',
+        '@media screen and (max-width: 1700px)': {
+            padding: '4px 3px !important',
+        }
     },
     link: {
         textDecoration: 'none',
@@ -128,7 +140,6 @@ const useStyles = makeStyles(theme => ({
             borderColor: '#f44336'
         }
     },
-
     signUpModal: {
         '& .MuiPaper-root': {
             borderRadius: '10px',
@@ -147,7 +158,10 @@ const useStyles = makeStyles(theme => ({
     },
     referralField: {
         '& fieldset': {
-            borderRadius: '10px'
+            borderRadius: '10px',
+            '& legend span' :{
+                width:'200px'
+            }
         }
     },
     inlineNotice: {
@@ -186,6 +200,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = ({method = CurrentAuthMethod, commonInfo}) => {
+
     const {authUser} = useSelector(({auth}) => auth);
     const classes = useStyles();
     const commonClasses = commonStyles();
@@ -246,10 +261,12 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
 
     useEffect(() => {
         if (commonInfo) {
+            setInlineNotice(commonInfo.inlineNotice);
             setNoteCounts(commonInfo.noteCounts);
             setMoneyAmount(commonInfo.moneyAmount);
             setCasinoMoney(commonInfo.casinoMoney);
             setMileageAmount(commonInfo.mileageAmount);
+            setPopupNotice(commonInfo.popupNotice);
 
             if (!isPopupShowed) {
                 setIsPopupShowed(localStorage.getItem("hidePopup") === "true" ? true : false);
@@ -402,24 +419,24 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
             <SidebarToggleHandler edge="start" color="inherit" aria-label="menu"/>
             {/*<Logo ml={2} color="white" />*/}
             <Box flex={1} className={commonClasses.hiddenSm}>
-                <a href="/" className={clsx(classes.notice, 'active')}><IntlMessages id={'header.notice'}/></a>
-                <a href="/" className={classes.notice}><IntlMessages id={'header.lineNotice'}/></a>
+                <span className={clsx(classes.notice, 'active')}><IntlMessages id={'header.notice'}/></span>
+                <span className={classes.inlineNotice}>
+                    {inlineNotice}
+                </span>
             </Box>
             {
                 authUser
                     ?
-                    <Box pr={2} className={classes.box}>
-                        <Tooltip title="Notifications">
+                    <Box pr={2} className={clsx(classes.box)}>
+                        <Tooltip title="Notifications" className={commonClasses.hiddenMd}>
                             <Grid container>
                                 <Grid item md={12}>
                                     <i className={clsx(classes.user, 'iconfont icon-huiyuan2')}></i>
-                                    <Typography component={'span'} variant={'inherit'}
-                                                style={{display: 'inline-block', marginLeft: '5px'}}>
+                                    <Typography component={'span'} variant={'inherit'} style={{display: 'inline-block', marginLeft: '5px'}}>
                                         {member ? member.id : ''}
                                         <LinkRouter color='inherit' to={"/user/note"} className={classes.link}>
                                             <i className={'iconfont icon-caidan'}>
-                                                <IntlMessages id={"header.note"}/>&nbsp;{noteCounts}<IntlMessages
-                                                id={"header.note.count"}/>
+                                                <IntlMessages id={"header.note"}/>&nbsp;{noteCounts}<IntlMessages id={"header.note.count"}/>
                                             </i>
                                         </LinkRouter>
                                     </Typography>
@@ -433,8 +450,8 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
             {
                 authUser
                     ?
-                    <Box pr={2} className={classes.box}>
-                        <Tooltip title="Money">
+                    <Box pr={2} className={clsx(classes.box)}>
+                        <Tooltip title="Money" className={commonClasses.hiddenMd}>
                             <Grid container>
                                 <Grid item md={12}>
                                     <i className={clsx(classes.user, 'iconfont icon-nsiconkrb')}></i>
@@ -467,8 +484,8 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
             {
                 authUser
                     ?
-                    <Box pr={2} className={classes.box}>
-                        <Tooltip title="Point">
+                    <Box pr={2} className={clsx(classes.box)}>
+                        <Tooltip title="Point" className={commonClasses.hiddenMd}>
                             <Grid container>
                                 <Grid item md={12}>
                                     <i className={clsx(classes.user, 'iconfont icon-hearts')}></i>
@@ -483,6 +500,57 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                                     </a>
                                 </Grid>
                             </Grid>
+                        </Tooltip>
+                        <Tooltip title="Notifications" className={commonClasses.showMd}>
+                            <Box>
+                                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                    <i className={clsx(classes.user, 'iconfont icon-huiyuan2')}></i>
+                                </Button>
+                                <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={infoClose}>
+                                    <MenuItem onClick={infoClose}>
+                                        <Grid container>
+                                            <Grid item md={12}>
+                                                <i className={clsx(classes.user, 'iconfont icon-huiyuan2')}></i>
+                                                <Typography component={'span'} variant={'inherit'} style={{display: 'inline-block', marginLeft: '5px'}}>
+                                                    {member ? member.id : ''}
+                                                    <LinkRouter color='inherit' to={"/user/note"} className={classes.link}>
+                                                        <i className={'iconfont icon-caidan'}>
+                                                            <IntlMessages id={"header.note"}/>&nbsp;{noteCounts}<IntlMessages id={"header.note.count"}/>
+                                                        </i>
+                                                    </LinkRouter>
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </MenuItem>
+                                    <MenuItem onClick={infoClose}>
+                                        <Grid container>
+                                            <Grid item md={12}>
+                                                <i className={clsx(classes.user, 'iconfont icon-nsiconkrb')}></i>
+                                                <Typography component={'span'} variant={'inherit'} style={{display: 'inline-block', marginLeft: '5px'}}>
+                                                    <IntlMessages id={'header.amountMoney'}/>
+                                                    <span style={{color: '#e8de0d'}}>{moneyAmount ? moneyAmount : 0}</span>&nbsp;
+                                                    <IntlMessages id={"header.money.yen"}/>
+                                                    <Button variant="contained" color="secondary" className={classes.btn}>
+                                                        <IntlMessages id={"header.updateMoney"}/>
+                                                    </Button>
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </MenuItem>
+                                    <MenuItem onClick={infoClose}>
+                                        <Grid container>
+                                            <Grid item md={12}>
+                                                <i className={clsx(classes.user, 'iconfont icon-hearts')}></i>
+                                                <Typography component={'span'} variant={'inherit'} style={{display: 'inline-block', marginLeft: '5px'}}>
+                                                    <IntlMessages id={"header.point"}/>
+                                                    <span style={{color: '#bb2322'}}>{mileageAmount ? mileageAmount : 0}</span>&nbsp;<IntlMessages id={"header.point"}/>
+                                                    <i className={clsx('iconfont icon-zhuanhuan4')} style={{color: '#757978', marginLeft: '5px'}}></i>
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </MenuItem>
+                                </Menu>
+                            </Box>
                         </Tooltip>
                     </Box>
                     :
