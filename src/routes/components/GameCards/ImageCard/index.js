@@ -48,13 +48,16 @@ const ImageCard = ({type, vendor, title, background_img, style, changeStyle, cle
 
         let commonInfo = localStorage.getItem("commonInfo") ? JSON.parse(localStorage.getItem("commonInfo")) : null;
 
+        let totalGamesObjects = {...commonInfo.baccaratCheck, ...commonInfo.slotCheck}
+
+        console.log(totalGamesObjects);
         // dragon_3
-        let keys = Object.keys(commonInfo.baccaratCheck);
-        let key = keys.find(key => key == vendor.toLowerCase());
-        if (key != undefined && commonInfo.baccaratCheck[key] == '1') {
+        let keys = Object.keys(totalGamesObjects);
+        let key = keys.find(key => key == type.toLowerCase() + "_" + vendor.toLowerCase() );
+        if (key != undefined && totalGamesObjects[key] == '1') {
             window.open('/game?type='+type+'&vendor='+vendor, 'Evolution', 'height='+window.innerHeight+', width='+(window.innerWidth - 200));
         } else {
-            alert(title + ' was disabled.');
+            alert(title + ' 는 점검중에 있습니다 잠시 기다려주십시오');
         }
     };
 

@@ -45,7 +45,7 @@ const JWTAuth = {
                     .get('auth/signin', {params: {loginID: id, password: password}})
                     .then(({data}) => {
                         if (data.success) {
-                            let userInfo = JSON.stringify(data.result.userInfo);
+                            let userInfo = data.result.userInfo;
                             if (userInfo.status == 1) {
                                 NotificationManager.success(data.message, 'SignIn');
                                 dispatch(fetchSuccess());

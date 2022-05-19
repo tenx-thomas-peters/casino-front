@@ -19,6 +19,7 @@ const UserAPI = {
                     let popupNotice = result.popupNotice;
                     // dragon_2
                     let baccaratCheck = JSON.parse(result.baccaratCheck);
+                    let slotCheck = JSON.parse(result.slotCheck);
                     console.log(result);
 
                     const commonInfo = {
@@ -32,6 +33,7 @@ const UserAPI = {
                         'inlineNotice': inlineNotice,
                         'popupNotice': popupNotice,
                         'baccaratCheck': baccaratCheck,
+                        'slotCheck': slotCheck,
                     };
 
                     localStorage.setItem("commonInfo", JSON.stringify(commonInfo));
