@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useInsertionEffect} from 'react';
 import {/*makeStyles, Card, CardHeader, CardContent, Typography, Box, */Grid}from '@material-ui/core';
 // import {NotificationManager} from 'react-notifications';
 
@@ -35,6 +35,15 @@ const Slot = ({gameType, categoryList}) => {
             setJackpotAmount(commonInfo.jackpotAmount);
         }
     };
+
+    // dragon_5
+    useEffect(() => {
+        let commonInfo = localStorage.getItem('commonInfo');
+        if (commonInfo == null || commonInfo == '') {
+            localStorage.setItem('need_login_popup', true);
+            window.location.href = '/user/home';
+        }
+    }, []);
 
     useEffect(() => {
         setJackpot();

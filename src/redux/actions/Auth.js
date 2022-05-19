@@ -1,4 +1,4 @@
-import { SEND_FORGET_PASSWORD_EMAIL, UPDATE_AUTH_USER, UPDATE_LOAD_USER } from '../../@jumbo/constants/ActionTypes';
+import { SEND_FORGET_PASSWORD_EMAIL, SIGNIN_POPUP, UPDATE_AUTH_USER, UPDATE_LOAD_USER } from '../../@jumbo/constants/ActionTypes';
 
 export const setAuthUser = user => {
   return dispatch => {
@@ -22,6 +22,16 @@ export const setForgetPassMailSent = status => {
   return dispatch => {
     dispatch({
       type: SEND_FORGET_PASSWORD_EMAIL,
+      payload: status,
+    });
+  };
+};
+
+// dragon_5
+export const setSigninPopup = status => {
+  return dispatch => {
+    dispatch({
+      type: SIGNIN_POPUP,
       payload: status,
     });
   };

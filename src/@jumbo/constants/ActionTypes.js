@@ -13,6 +13,7 @@ export const SIGNIN_TWITTER_USER_SUCCESS = 'signin_twitter_user_success';
 export const SIGNIN_GITHUB_USER_SUCCESS = 'signin_github_user_SUCCESS';
 export const SIGNIN_USER_SUCCESS = 'signin_user_success';
 export const SIGNOUT_USER_SUCCESS = 'signout_user_success';
+export const SIGNIN_POPUP = 'sginin_popup';
 
 export const SET_DASHBOARD_DATA = 'set_dashboard_data';
 

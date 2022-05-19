@@ -798,5 +798,12 @@
   "signup.referralCodeInput": "추천코드를 입력해주세요",
   "home.popupAlarm": "Do not show this popup for a day",
   "home.close": "Close",
-  "header.signup": "회원가입"
+  "header.signup": "회원가입",
+
+  "signin.id": "아이디",
+  "signin.id.hint": "회원아이디를 입력해주세요",
+  "signin.password": "비밀번호",
+  "signin.password.hint": "비밀번호를 입력해주세요",
+  "signin.no.account": "아직도 회원이 아니신가요?",
+  "signin.free.signup": "무료회원가입"
 }

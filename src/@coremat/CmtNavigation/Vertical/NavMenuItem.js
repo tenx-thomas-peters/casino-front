@@ -1,11 +1,12 @@
 import React, {useContext} from 'react';
-
+import {useDispatch, useSelector} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import clsx from 'clsx';
 
 import {List} from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SidebarThemeContext from '../../CmtLayouts/SidebarThemeContext/SidebarThemeContext';
+import {setSigninPopup} from '../../../redux/actions/Auth';
 
 const useStyles = makeStyles(theme => ({
     navMenuItem: {
@@ -82,6 +83,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NavMenuItem = props => {
+    const dispatch = useDispatch();
+    const {authUser} = useSelector(({auth}) => auth);
     const {name, icon, link} = props;
     const {sidebarTheme} = useContext(SidebarThemeContext);
     const classes = useStyles({sidebarTheme});
@@ -98,9 +101,28 @@ const NavMenuItem = props => {
         return null;
     };
 
+    const refresh = () => {
+        localStorage.setItem('signinPopupFlag', true);
+        localStorage.setItem('signinPopupDate', Date());
+    }
+
+    // dragon_5
+    const getLink = () => {
+        if (link == '/user/home') {
+            return link;
+        }
+
+        if (authUser) {
+            return link;
+        } else {            
+            return '/user/home' + link.replace('/user', '');
+        }
+    }
+
+
     return (
         <List component="div" className={clsx(classes.navMenuItem, 'Cmt-nav-menu-item')}>
-            <NavLink className={clsx(classes.navMenuLink, 'Cmt-nav-menu-link')} to={link}>
+            <NavLink className={clsx(classes.navMenuLink, 'Cmt-nav-menu-link')} to={getLink} onClick={() => refresh()}>
                 {/* Display an icon if any */}
                 {renderIcon()}
                 <span className={clsx(classes.navText, 'Cmt-nav-text')}>{name}</span>
