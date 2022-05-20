@@ -77,25 +77,28 @@ const JWTAuth = {
     },
 
     onLogout: () => {
+        let token = localStorage.getItem('token');
+console.log("draogn---", token);
         return dispatch => {
             dispatch(fetchStart());
-            // axios
-            //     .post('auth/logout')
-            //     .then(({data}) => {
-            //         if (data.success) {
-            //             dispatch(fetchSuccess());
-            //
-            //             localStorage.removeItem('token');
-            //             localStorage.removeItem('user');
-            //
-            //             dispatch(setAuthUser(null));
-            //         } else {
-            //             dispatch(fetchError(data.error));
-            //         }
-            //     })
-            //     .catch(function (error) {
-            //         dispatch(fetchError(error.message));
-            //     });
+            axios
+                .post('auth/signout', {
+                    token: `${token}`,
+                })
+                .then(({data}) => {
+                    if (data.success) {
+                        // dispatch(fetchSuccess());
+                        // localStorage.removeItem('token');
+                        // localStorage.removeItem('user');
+                        // dispatch(setAuthUser(null));
+                    } else {
+                        // dispatch(fetchError(data.error));
+                    }
+                })
+                .catch(function (error) {
+                    // dispatch(fetchError(error.message));
+                });
+
             dispatch(fetchSuccess());
 
             localStorage.removeItem('token');
