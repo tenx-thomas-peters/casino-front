@@ -29,7 +29,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import SidebarToggleHandler from '../../../../../@coremat/CmtLayouts/Vertical/SidebarToggleHandler';
 import LanguageSwitcher from '../LanguageSwitcher';
-
+import {setSigninPopup} from '../../../../../redux/actions/Auth';
 import IntlMessages from '../../../../utils/IntlMessages';
 import {AuthMethods} from "../../../../../services/auth";
 import {CurrentAuthMethod} from "../../../../constants/AppConstants";
@@ -144,7 +144,7 @@ const useStyles = makeStyles(theme => ({
         '& .MuiPaper-root': {
             borderRadius: '10px',
             backgroundColor: '#2f2f38',
-            minWidth: '400px',
+            width: '500px',
             paddingBottom: '20px'
         },
         '& #responsive-dialog-title span': {
@@ -201,7 +201,7 @@ const useStyles = makeStyles(theme => ({
 
 const Header = ({method = CurrentAuthMethod, commonInfo}) => {
 
-    const {authUser} = useSelector(({auth}) => auth);
+    const {authUser, signinPopup} = useSelector(({auth}) => auth);
     const classes = useStyles();
     const commonClasses = commonStyles();
     const dispatch = useDispatch();
@@ -220,7 +220,8 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
 
-    const [open, setOpen] = React.useState(false);
+    const [signupOpen, setSignupOpen] = useState(false);
+    const [signinOpen, setSigninOpen] = useState(false);
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -230,12 +231,15 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
     const [isRecommeded, setIsRecommeded] = useState(false);
     const [isPopupShowed, setIsPopupShowed] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    const [signinPopupId, setSigninPopupId] = useState('');
+    const [signinPopupIdError, setSigninPopupIdError] = useState('');
+    const [signinPopupPassword, setSigninPopupPassword] = useState('');
+    const [signinPopupPasswordError, setSigninPopupPasswordError] = useState('');
+
 
     const handleClose = () => {
-        setOpen(false);
+        setSignupOpen(false);
+        setSigninOpen(false);
         setReferralCode('');
         setTimeout(() => {
             setIsRecommeded(false);
@@ -258,6 +262,14 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
             setMember(userInfo);
         }
     }, []);
+
+    // dragon_5
+    useEffect(() => {
+        if (!authUser && localStorage.getItem('signinPopupFlag') == "true") {
+            setSigninOpen(true);
+            localStorage.setItem('signinPopupFlag', "false");
+        }
+    }, [localStorage.getItem('signinPopupFlag')]);
 
     useEffect(() => {
         if (commonInfo) {
@@ -338,6 +350,27 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
             // });
     };
 
+    const popupLogin = () => {
+        if (signinPopupId.trim() === '') {
+            setSigninPopupIdError('Please input required field');
+        } else {
+            setSigninPopupIdError('');
+        }
+
+        if (signinPopupPassword.trim() === '') {
+            setSigninPopupPasswordError('Please input required field');
+        } else {
+            setSigninPopupPasswordError('');
+        }
+
+        if (signinPopupId.trim() === '' || signinPopupPassword.trim() === '') {
+            NotificationManager.error('Please input required field', 'Error');
+            return;
+        }
+        setSigninOpen(false);
+        dispatch(AuthMethods[method].onLogin(signinPopupId, signinPopupPassword));
+    };
+
     const exchangeMileage= (event) => {
         let userSeq = member.seq;
         console.log(userSeq);
@@ -379,7 +412,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
     const descriptionElementRef = React.useRef(null);
     const [popupOpen, setPopupOpen] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (popupOpen) {
             const { current: descriptionElement } = descriptionElementRef;
             if (descriptionElement !== null) {
@@ -589,89 +622,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                     ''
                     :
                     <Box className={classes.langRoot}>
-                        <span className={clsx(classes.logoutBtn, commonClasses.hiddenXs)} onClick={handleClickOpen}><IntlMessages id={'header.signup'}/></span>
-                        <Dialog className={classes.signUpModal} fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
-                            <DialogTitle id="responsive-dialog-title" style={{padding: '0'}}>
-                                <span onClick={handleClose}><CloseIcon /></span>
-                            </DialogTitle>
-                            <DialogContent>
-                                {
-                                    isRecommeded
-                                        ?
-                                        <form>
-                                            <Box mb={2}>
-                                                <TextField
-                                                    label={<IntlMessages id="appModule.name"/>}
-                                                    fullWidth
-                                                    onChange={event => setName(event.target.value)}
-                                                    defaultValue={name}
-                                                    margin="normal"
-                                                    variant="outlined"
-                                                    className={classes.textFieldRoot}
-                                                    required={true}
-                                                />
-                                            </Box>
-                                            <Box mb={2}>
-                                                <TextField
-                                                    label={<IntlMessages id="appModule.nickname"/>}
-                                                    fullWidth
-                                                    onChange={event => setNickname(event.target.value)}
-                                                    defaultValue={nickname}
-                                                    margin="normal"
-                                                    variant="outlined"
-                                                    className={classes.textFieldRoot}
-                                                    required={true}
-                                                />
-                                            </Box>
-                                            <Box mb={2}>
-                                                <TextField
-                                                    type="password"
-                                                    label={<IntlMessages id="appModule.password"/>}
-                                                    fullWidth
-                                                    onChange={event => setPassword(event.target.value)}
-                                                    defaultValue={password}
-                                                    margin="normal"
-                                                    variant="outlined"
-                                                    className={classes.textFieldRoot}
-                                                    required={true}
-                                                />
-                                            </Box>
-                                            <Box
-                                                display="flex"
-                                                flexDirection={{xs: 'column', sm: 'row'}}
-                                                alignItems={{sm: 'center'}}
-                                                justifyContent={{sm: 'space-between'}}
-                                                mb={3}>
-                                                <Box mb={{xs: 2, sm: 0}}>
-                                                    <Button onClick={onSubmit} variant="contained" color="primary">
-                                                        <IntlMessages id="appModule.regsiter"/>
-                                                    </Button>
-                                                </Box>
-                                            </Box>
-                                        </form>
-                                        :
-                                        <Box pr={2} className={commonClasses.hiddenSm} style={{padding: '0 20px'}}>
-                                            <h2 style={{color: '#efb221', textAlign:'center', fontSize: '40px', fontWeight: '900', marginBottom: '20px'}}><IntlMessages id={'signup.title'}/></h2>
-                                            <span><IntlMessages id={'signup.referralCode'}/></span>
-                                            <TextField
-                                                type="text"
-                                                label={<IntlMessages id="signup.referralCodeInput"/>}
-                                                fullWidth
-                                                onChange={event => setReferralCode(event.target.value)}
-                                                defaultValue={referralCode}
-                                                margin="normal"
-                                                variant="outlined"
-                                                className={referralCodeError ? clsx(classes.textFieldError, classes.referralField) : classes.referralField}
-                                                required
-                                                style={{background: '#1e1f21', borderRadius: '10px'}}
-                                            />
-                                            <Button onClick={handleNext} className={commonClasses.containedActionButton} autoFocus style={{width: '100%', padding: '12px 0', marginTop: '15px', borderRadius: '10px'}}>
-                                                <IntlMessages id={'signup.next'}/>
-                                            </Button>
-                                        </Box>
-                                }
-                            </DialogContent>
-                        </Dialog>
+                        <span className={clsx(classes.logoutBtn, commonClasses.hiddenXs)} onClick={() => setSignupOpen(true)}><IntlMessages id={'header.signup'}/></span>
                     </Box>
             }
 
@@ -699,6 +650,140 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            <Dialog className={classes.signUpModal} fullScreen={fullScreen} open={signupOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+                <DialogTitle id="responsive-dialog-title" style={{padding: '0'}}>
+                    <span onClick={handleClose}><CloseIcon /></span>
+                </DialogTitle>
+                <DialogContent>
+                    {
+                        isRecommeded
+                            ?
+                            <form>
+                                <Box mb={2}>
+                                    <TextField
+                                        label={<IntlMessages id="appModule.name"/>}
+                                        fullWidth
+                                        onChange={event => setName(event.target.value)}
+                                        defaultValue={name}
+                                        margin="normal"
+                                        variant="outlined"
+                                        className={classes.textFieldRoot}
+                                        required={true}
+                                    />
+                                </Box>
+                                <Box mb={2}>
+                                    <TextField
+                                        label={<IntlMessages id="appModule.nickname"/>}
+                                        fullWidth
+                                        onChange={event => setNickname(event.target.value)}
+                                        defaultValue={nickname}
+                                        margin="normal"
+                                        variant="outlined"
+                                        className={classes.textFieldRoot}
+                                        required={true}
+                                    />
+                                </Box>
+                                <Box mb={2}>
+                                    <TextField
+                                        type="password"
+                                        label={<IntlMessages id="appModule.password"/>}
+                                        fullWidth
+                                        onChange={event => setPassword(event.target.value)}
+                                        defaultValue={password}
+                                        margin="normal"
+                                        variant="outlined"
+                                        className={classes.textFieldRoot}
+                                        required={true}
+                                    />
+                                </Box>
+                                <Box
+                                    display="flex"
+                                    flexDirection={{xs: 'column', sm: 'row'}}
+                                    alignItems={{sm: 'center'}}
+                                    justifyContent={{sm: 'space-between'}}
+                                    mb={3}>
+                                    <Box mb={{xs: 2, sm: 0}}>
+                                        <Button onClick={onSubmit} variant="contained" color="primary">
+                                            <IntlMessages id="appModule.regsiter"/>
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            </form>
+                            :
+                            <Box pr={2} className={commonClasses.hiddenSm} style={{padding: '0 20px'}}>
+                                <h2 style={{color: '#efb221', textAlign:'center', fontSize: '40px', fontWeight: '900', marginBottom: '20px'}}><IntlMessages id={'signup.title'}/></h2>
+                                <span><IntlMessages id={'signup.referralCode'}/></span>
+                                <TextField
+                                    type="text"
+                                    label={<IntlMessages id="signup.referralCodeInput"/>}
+                                    fullWidth
+                                    onChange={event => setReferralCode(event.target.value)}
+                                    defaultValue={referralCode}
+                                    margin="normal"
+                                    variant="outlined"
+                                    className={referralCodeError ? clsx(classes.textFieldError, classes.referralField) : classes.referralField}
+                                    required
+                                    style={{background: '#1e1f21', borderRadius: '10px'}}
+                                />
+                                <Button onClick={handleNext} className={commonClasses.containedActionButton} autoFocus style={{width: '100%', padding: '12px 0', marginTop: '15px', borderRadius: '10px'}}>
+                                    <IntlMessages id={'signup.next'}/>
+                                </Button>
+                            </Box>
+                    }
+                </DialogContent>
+            </Dialog>
+
+            {/* dragon_5 */}
+            <Dialog className={classes.signUpModal} fullScreen={fullScreen} open={signinOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+                <DialogTitle id="responsive-dialog-title" style={{padding: '0'}}>
+                    <span onClick={handleClose}><CloseIcon /></span>
+                </DialogTitle>
+                <DialogContent>
+                    <Box pr={2} className={commonClasses.hiddenSm} style={{padding: '0 20px'}}>
+                        <h2 style={{color: '#efb221', textAlign:'center', fontSize: '40px', fontWeight: '900', marginBottom: '20px'}}><IntlMessages id={'signup.title'}/></h2>
+                        <span><IntlMessages id={'signin.id'}/></span>
+                        <TextField
+                            type="text"
+                            label={<IntlMessages id="signin.id.hint"/>}
+                            fullWidth
+                            onChange={event => setSigninPopupId(event.target.value)}
+                            defaultValue={signinPopupId}
+                            margin="normal"
+                            variant="outlined"
+                            className={signinPopupIdError ? clsx(classes.textFieldError, classes.referralField) : classes.referralField}
+                            required
+                            style={{background: '#1e1f21', borderRadius: '10px', marginBottom: '30px'}}
+                        />
+                        <span><IntlMessages id={'signin.password'}/></span>
+                        <TextField
+                            type="text"
+                            label={<IntlMessages id="signin.password.hint"/>}
+                            fullWidth
+                            onChange={event => setSigninPopupPassword(event.target.value)}
+                            defaultValue={signinPopupPassword}
+                            margin="normal"
+                            variant="outlined"
+                            secureTextEntry={true}
+                            className={signinPopupPasswordError ? clsx(classes.textFieldError, classes.referralField) : classes.referralField}
+                            required
+                            style={{background: '#1e1f21', borderRadius: '10px'}}
+                        />
+                        <Button onClick={() => popupLogin()} className={commonClasses.containedActionButton} autoFocus style={{width: '100%', padding: '12px 0', marginTop: '15px', borderRadius: '10px'}}>
+                            <IntlMessages id={'header.login'}/>
+                        </Button>
+                        
+                        <Box mb={2} style={{marginTop: '20px'}}>
+                            <span style={{marginLeft: '50px'}}><IntlMessages id={'signin.no.account'}/></span>
+                            <span style={{color: '#efb221', textAlign:'center', fontSize: '20px', fontWeight: '500', marginLeft: '10px'}} onClick={() => {
+                                setSigninOpen(false);
+                                setSignupOpen(true);
+                            }}><IntlMessages id={'signin.free.signup'}/></span>
+                        </Box>
+                    </Box>
+                </DialogContent>
+            </Dialog>
+
         </Toolbar>
     );
 };

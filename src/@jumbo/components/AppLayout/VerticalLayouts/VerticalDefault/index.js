@@ -43,6 +43,7 @@ const VerticalDefault = ({children}) => {
     const getUserInfo = () => {
         let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
         let memberSeq = userInfo && userInfo.seq ? userInfo.seq : '';
+        console.log(memberSeq);
         UserAPI.getUserInfo({memberSeq});
 
         setCommonInfo(localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null);

@@ -50,7 +50,6 @@ const ImageCard = ({type, vendor, title, background_img, style, changeStyle, cle
 
         let totalGamesObjects = {...commonInfo.baccaratCheck, ...commonInfo.slotCheck}
 
-        console.log(totalGamesObjects);
         // dragon_3
         let keys = Object.keys(totalGamesObjects);
         let key = keys.find(key => key == type.toLowerCase() + "_" + vendor.toLowerCase() );
