@@ -144,7 +144,7 @@ const useStyles = makeStyles(theme => ({
         '& .MuiPaper-root': {
             borderRadius: '10px',
             backgroundColor: '#2f2f38',
-            width: '400px',
+            width: '500px',
             paddingBottom: '20px'
         },
         '& #responsive-dialog-title span': {
@@ -265,12 +265,11 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
 
     // dragon_5
     useEffect(() => {
-        if (!authUser && localStorage.getItem('signinPopupFlag') && localStorage.getItem('signinPopupDate')) {
+        if (!authUser && localStorage.getItem('signinPopupFlag') == "true") {
             setSigninOpen(true);
-            // dispatch(setSigninPopup(false));
-            localStorage.setItem('signinPopupFlag', false);
+            localStorage.setItem('signinPopupFlag', "false");
         }
-    }, [localStorage.getItem('signinPopupFlag'), localStorage.getItem('signinPopupDate')]);
+    }, [localStorage.getItem('signinPopupFlag')]);
 
     useEffect(() => {
         if (commonInfo) {
@@ -775,7 +774,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                         </Button>
                         
                         <Box mb={2} style={{marginTop: '20px'}}>
-                            <span style={{marginLeft: '20px'}}><IntlMessages id={'signin.no.account'}/></span>
+                            <span style={{marginLeft: '50px'}}><IntlMessages id={'signin.no.account'}/></span>
                             <span style={{color: '#efb221', textAlign:'center', fontSize: '20px', fontWeight: '500', marginLeft: '10px'}} onClick={() => {
                                 setSigninOpen(false);
                                 setSignupOpen(true);

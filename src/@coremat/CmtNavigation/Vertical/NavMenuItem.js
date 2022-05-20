@@ -102,8 +102,9 @@ const NavMenuItem = props => {
     };
 
     const refresh = () => {
-        localStorage.setItem('signinPopupFlag', true);
-        localStorage.setItem('signinPopupDate', Date());
+        if (link != '/user/home' && !authUser) {
+            localStorage.setItem('signinPopupFlag', "true");
+        }
     }
 
     // dragon_5
