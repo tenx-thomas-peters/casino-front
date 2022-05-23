@@ -399,6 +399,10 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
         }
     };
 
+    const numberWithCommas = (x) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
@@ -490,7 +494,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                                     <i className={clsx(classes.user, 'iconfont icon-nsiconkrb')}></i>
                                     <Typography component={'span'} variant={'inherit'} style={{display: 'inline-block', marginLeft: '5px'}}>
                                         <IntlMessages id={'header.amountMoney'}/>
-                                        <span style={{color: '#e8de0d'}}>{!isNaN(moneyAmount+casinoMoney)? moneyAmount+casinoMoney:0 }</span>&nbsp;
+                                        <span style={{color: '#e8de0d'}}>{!isNaN(moneyAmount+casinoMoney)? numberWithCommas(moneyAmount+casinoMoney):0 }</span>&nbsp;
                                         <IntlMessages id={"header.money.yen"}/>
                                         <Button variant="contained" color="secondary" className={classes.btn}>
                                             <IntlMessages id={"header.updateMoney"}/>
