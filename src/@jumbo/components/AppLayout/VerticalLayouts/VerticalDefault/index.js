@@ -46,7 +46,17 @@ const VerticalDefault = ({children}) => {
         console.log(memberSeq);
         UserAPI.getUserInfo({memberSeq});
 
-        setCommonInfo(localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null);
+        // dragon_7
+        let info = localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null;
+        if (info != null) {
+            let accessToken = localStorage.getItem('token');
+            let token = info.token;
+            if (token != null && token != '' && `${accessToken}` != `${token}`) {
+                dispatch(AuthMethods[CurrentAuthMethod].onLogout());
+            }
+        }
+        
+        setCommonInfo(info);
     };
 
     // const {authUser} = useSelector(({auth}) => auth);

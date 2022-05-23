@@ -20,7 +20,7 @@ const UserAPI = {
                     // dragon_2
                     let baccaratCheck = JSON.parse(result.baccaratCheck);
                     let slotCheck = JSON.parse(result.slotCheck);
-                    console.log(result);
+                    let token = result.token;
 
                     const commonInfo = {
                         'jackpotAmount': jackpotAmount,
@@ -34,8 +34,10 @@ const UserAPI = {
                         'popupNotice': popupNotice,
                         'baccaratCheck': baccaratCheck,
                         'slotCheck': slotCheck,
+                        'token': token
                     };
 
+                    // dragon_7
                     localStorage.setItem("commonInfo", JSON.stringify(commonInfo));
                 }
             })

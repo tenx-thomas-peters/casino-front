@@ -57,7 +57,7 @@ const UserHome = () => {
                             setRecentWithdraw(res.data.result.withdraw);
                         }
                     });
-            }, 1000);
+            }, 5000);
         }
         return () => clearInterval(interval);
     }, [jackpotAmount, authUser]);
