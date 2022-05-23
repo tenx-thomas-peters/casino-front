@@ -122,7 +122,7 @@ console.log("draogn---", token);
 
             if (token) {
                 axios
-                    .get('auth/me', {params: {token: token, name: userInfo.name, password: userInfo.password}})
+                    .get('auth/me', {params: {token: token, loginID: userInfo.id, password: userInfo.password}})
                     .then(({data}) => {
                         if (data.result) {
                             // dispatch(fetchSuccess());
