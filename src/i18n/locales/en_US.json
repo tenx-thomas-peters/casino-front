@@ -805,5 +805,7 @@
   "signin.password": "비밀번호",
   "signin.password.hint": "비밀번호를 입력해주세요",
   "signin.no.account": "아직도 회원이 아니신가요?",
-  "signin.free.signup": "무료회원가입"
+  "signin.free.signup": "무료회원가입",
+  "popup.hide": "하루 동안 이 팝업을 보이지 않음.",
+  "popup.close": "닫기"
 }

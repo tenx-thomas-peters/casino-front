@@ -46,9 +46,8 @@ const ImageCard = ({type, vendor, title, background_img, style, changeStyle, cle
     const openPopup = (e) => {
         e.preventDefault();
 
-        let commonInfo = localStorage.getItem("commonInfo") ? JSON.parse(localStorage.getItem("commonInfo")) : null;
-
         // dragon_3
+        let commonInfo = localStorage.getItem("commonInfo") ? JSON.parse(localStorage.getItem("commonInfo")) : null;
         let totalGamesObjects = {...commonInfo.baccaratCheck, ...commonInfo.slotCheck}
         let keys = Object.keys(totalGamesObjects);
         let key = keys.find(key => key == type.toLowerCase() + "_" + vendor.toLowerCase() );
