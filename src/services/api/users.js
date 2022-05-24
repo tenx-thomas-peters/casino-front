@@ -36,8 +36,6 @@ const UserAPI = {
                         'slotCheck': slotCheck,
                         'token': token
                     };
-
-                    // dragon_7
                     localStorage.setItem("commonInfo", JSON.stringify(commonInfo));
                 }
             })
