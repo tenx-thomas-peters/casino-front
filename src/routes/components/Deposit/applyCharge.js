@@ -33,6 +33,7 @@ import DepositAPI from '../../../services/api/apps/deposit';
 
 import clsx from 'clsx';
 import axios from 'axios';
+import SupportAPI from "../../../services/api/apps/support";
 
 const depositStyles = makeStyles(theme => ({
     revenueRoot: {
@@ -239,19 +240,21 @@ const DepositApplyCharge = () => {
     };
 
     const sendRequestAccount = () => {
+        let title = CommonConstants.txtAskSoonTitle;
+        let content= CommonConstants.txtAskSoonContent;
         let type = CommonConstants.noteTypePost;
         let classification = CommonConstants.noteClassificationCustomerService;
-        let params = {title: title, content: content, type: type, classification: classification};
 
         if (authUser) {
-            DepositAPI.sendRequestAccount({params})
+            let memberSeq = authUser.seq;
+            SupportAPI.postSupportForm({memberSeq, title, content, type, classification})
                 .then((res) => {
                     if (res.data.success) {
                         NotificationManager.success(res.data.message, 'Success!');
                     }
                 })
                 .catch(function (err) {
-                    NotificationManager.error(err.message, 'Error');
+                    NotificationManager.error(err, 'Error!');
                 });
         } else {
             NotificationManager.error('Please login first', 'Error');

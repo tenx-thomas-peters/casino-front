@@ -119,7 +119,7 @@ const GameList = () => {
             // TODO
             // game api - /get-game-url
 
-            gameService.post('user/refresh-token?_method=PATCH', {username: user.name})
+            gameService.post('user/refresh-token?_method=PATCH', {username: user.id})
             // gameService.patch('/user/refresh-token', {params: {username: user.name}})
                 .then(res => {
                     if (res.status === 200) {
