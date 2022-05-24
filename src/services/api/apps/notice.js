@@ -1,6 +1,10 @@
 import service from '../../config';
 
 const NoticeAPI = {
+    getPopupList: async () => {
+        return await service
+            .get('popup_list');
+    },
     getNoticeList: async ({type, classification, pageNo, pageSize}) => {
         return await service
             .get('getNoteList',

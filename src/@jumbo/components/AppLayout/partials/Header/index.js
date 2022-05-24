@@ -29,7 +29,6 @@ import {
 import CloseIcon from '@material-ui/icons/Close';
 import SidebarToggleHandler from '../../../../../@coremat/CmtLayouts/Vertical/SidebarToggleHandler';
 import LanguageSwitcher from '../LanguageSwitcher';
-import {setSigninPopup} from '../../../../../redux/actions/Auth';
 import IntlMessages from '../../../../utils/IntlMessages';
 import {AuthMethods} from "../../../../../services/auth";
 import {CurrentAuthMethod} from "../../../../constants/AppConstants";
@@ -761,14 +760,13 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                         />
                         <span><IntlMessages id={'signin.password'}/></span>
                         <TextField
-                            type="text"
+                            type="password"
                             label={<IntlMessages id="signin.password.hint"/>}
                             fullWidth
                             onChange={event => setSigninPopupPassword(event.target.value)}
                             defaultValue={signinPopupPassword}
                             margin="normal"
                             variant="outlined"
-                            secureTextEntry={true}
                             className={signinPopupPasswordError ? clsx(classes.textFieldError, classes.referralField) : classes.referralField}
                             required
                             style={{background: '#1e1f21', borderRadius: '10px'}}
