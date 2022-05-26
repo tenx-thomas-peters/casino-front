@@ -14,7 +14,7 @@ import commonStyles from '../../../@jumbo/common/common.style';
 // import {CommonConstants} from "../Common/Constants";
 
 const txt = {
-    slots: {
+    slot: {
         title: <IntlMessages id={'home.gameCategory.slotGame'}/>,
         subTitle: <IntlMessages id={'home.mostFavoriteSlotGames'}/>
     },

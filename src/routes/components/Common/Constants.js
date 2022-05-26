@@ -7,7 +7,7 @@ export const CommonConstants = {
     noteClassificationFreeBoard: 2,
     noteClassificationEvent: 3,
     noteClassificationCustomerService: 4,
-    gameTypeSlot: 'slots',
+    gameTypeSlot: 'slot',
     gameTypeBaccarat: 'baccarat',
     txtAskSoonTitle: '빠른계좌문의',
     txtAskSoonContent: '빠른계좌문의',
