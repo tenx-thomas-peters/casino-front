@@ -69,7 +69,7 @@ const UserHome = () => {
     }
 
     useEffect(() => {
-        // dragon_8
+        // dragon
         NoticeAPI.getPopupList()
             .then(res => {
                 if (res.data.success) {
@@ -159,7 +159,7 @@ const UserHome = () => {
                 </Grid>
             </GridContainer>
 
-            {/* dragon_8 */}
+            {/* dragon */}
             {
                 popupList.length > 0 &&
                 (

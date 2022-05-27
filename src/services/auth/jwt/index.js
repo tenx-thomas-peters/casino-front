@@ -5,9 +5,16 @@ import {NotificationManager} from 'react-notifications';
 import axios from '../../config';
 
 const JWTAuth = {
-    onRegister: ({id, name, nickname, password}) => {
+    onRegister: (id, name, nickname, password, referralCode) => {
         return dispatch => {
             dispatch(fetchStart());
+            console.log({
+                id: id,
+                name: name,
+                nickname: nickname,
+                password: password,
+                referral_code: referralCode,
+            });
             axios
                 .post('auth/register', {
                     id: id,
@@ -19,12 +26,14 @@ const JWTAuth = {
                     if (data.success) {
                         NotificationManager.success(data.message, 'SignUp');
 
-                        localStorage.setItem('token', data.result.token);
-                        localStorage.setItem('user', JSON.stringify(data.result.userInfo));
+                        // localStorage.setItem('token', data.result.token);
+                        // localStorage.setItem('user', JSON.stringify(data.result.userInfo));
 
                         // axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token.access_token;
                         dispatch(fetchSuccess());
-                        dispatch(JWTAuth.getAuthUser(true, data.result.token));
+                        // dispatch(JWTAuth.getAuthUser(true, data.result.token));
+                        
+                        window.location.href = '/user/home';
                     } else {
                         NotificationManager.error(data.message, 'SignUp');
                         dispatch(fetchError(data.error));
@@ -78,7 +87,6 @@ const JWTAuth = {
 
     onLogout: () => {
         let token = localStorage.getItem('token');
-console.log("draogn---", token);
         return dispatch => {
             dispatch(fetchStart());
             axios

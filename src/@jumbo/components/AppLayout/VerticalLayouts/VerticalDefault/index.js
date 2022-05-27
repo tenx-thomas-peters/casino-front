@@ -46,7 +46,7 @@ const VerticalDefault = ({children}) => {
         console.log(memberSeq);
         UserAPI.getUserInfo({memberSeq});
 
-        // dragon_7
+        // dragon
         let info = localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null;
         if (info != null) {
             let accessToken = localStorage.getItem('token');
@@ -60,7 +60,7 @@ const VerticalDefault = ({children}) => {
     };
 
     // const {authUser} = useSelector(({auth}) => auth);
-    // // dragon_4
+    // // dragon
     // useEffect(() => {
     //     if (authUser != null) {
     //         alert(authUser.status);

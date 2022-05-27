@@ -36,7 +36,7 @@ const Slot = ({gameType, categoryList}) => {
         }
     };
 
-    // dragon_5
+    // dragon
     useEffect(() => {
         let commonInfo = localStorage.getItem('commonInfo');
         if (commonInfo == null || commonInfo == '') {
