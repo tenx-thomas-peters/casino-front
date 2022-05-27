@@ -5,7 +5,7 @@ import {NotificationManager} from 'react-notifications';
 import axios from '../../config';
 
 const JWTAuth = {
-    onRegister: (id, name, nickname, password) => {
+    onRegister: (id, name, nickname, password, referralCode) => {
         return dispatch => {
             dispatch(fetchStart());
             console.log({
@@ -13,6 +13,7 @@ const JWTAuth = {
                 name: name,
                 nickname: nickname,
                 password: password,
+                referral_code: referralCode,
             });
             axios
                 .post('auth/register', {

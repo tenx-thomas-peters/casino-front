@@ -69,7 +69,7 @@ const UserRegister = () => {
             NotificationManager.error('Password does not match.!', 'Error');
             return;
         } else {
-            dispatch(AuthMethods[method].onRegister(id, id, nickname, password));
+            dispatch(AuthMethods[method].onRegister(id, id, nickname, password, referralCode));
         }
     }
 
