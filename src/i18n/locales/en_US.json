@@ -818,6 +818,11 @@
   "signup.user.confirm_password": "비밀번호확인",
   "signup.user.confirm_password.hint": "비밀번호를 재입력해주세요",
   "signup.user.nick_name": "닉네임",
+  "signup.user.phone_number": "핸드폰번호",
+  "signup.user.bank_name": "은행명",
+  "signup.user.bank_number": "계좌번호",
+  "signup.user.account_holder": "예금주",
+  "signup.user.withdraw_password": "출금비번",
   "signup.user.nick_name.hint": "닉네임을 입력해주세요",
   "signup.user.request": "가입신청",
   "signup.user.cancel": "취소"

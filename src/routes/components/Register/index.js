@@ -59,6 +59,11 @@ const UserRegister = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [nickname, setNickname] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [bankName, setBankName] = useState('');
+    const [bankNumber, setBankNumber] = useState('');
+    const [accountHolder, setAccountHolder] = useState('');
+    const [withdrawPassword, setWithdrawPassword] = useState('');
 
     const onRegister = () => {
         let referralCode = localStorage.getItem('referralCode')
@@ -69,7 +74,7 @@ const UserRegister = () => {
             NotificationManager.error('Password does not match.!', 'Error');
             return;
         } else {
-            dispatch(AuthMethods[method].onRegister(id, id, nickname, password, referralCode));
+            dispatch(AuthMethods[method].onRegister(id, nickname, password, referralCode, phoneNumber, bankName, bankNumber, accountHolder, withdrawPassword));
         }
     }
 
@@ -144,6 +149,81 @@ const UserRegister = () => {
                         fullWidth
                         onChange={event => setNickname(event.target.value)}
                         defaultValue={nickname}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textFieldRoot}
+                        required={true}
+                    />
+                </Box>
+
+                <Box className={classes.rowRoot}>
+                    <FormLabel component="legend" className={classes.labelRoot}>
+                        {<IntlMessages id="signup.user.phone_number"/>}
+                    </FormLabel>
+                    <TextField
+                        fullWidth
+                        onChange={event => setPhoneNumber(event.target.value)}
+                        defaultValue={phoneNumber}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textFieldRoot}
+                        required={true}
+                    />
+                </Box>
+
+                <Box className={classes.rowRoot}>
+                    <FormLabel component="legend" className={classes.labelRoot}>
+                        {<IntlMessages id="signup.user.bank_name"/>}
+                    </FormLabel>
+                    <TextField
+                        fullWidth
+                        onChange={event => setBankName(event.target.value)}
+                        defaultValue={bankName}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textFieldRoot}
+                        required={true}
+                    />
+                </Box>
+
+                <Box className={classes.rowRoot}>
+                    <FormLabel component="legend" className={classes.labelRoot}>
+                        {<IntlMessages id="signup.user.bank_number"/>}
+                    </FormLabel>
+                    <TextField
+                        fullWidth
+                        onChange={event => setBankNumber(event.target.value)}
+                        defaultValue={bankNumber}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textFieldRoot}
+                        required={true}
+                    />
+                </Box>
+
+                <Box className={classes.rowRoot}>
+                    <FormLabel component="legend" className={classes.labelRoot}>
+                        {<IntlMessages id="signup.user.account_holder"/>}
+                    </FormLabel>
+                    <TextField
+                        fullWidth
+                        onChange={event => setAccountHolder(event.target.value)}
+                        defaultValue={accountHolder}
+                        margin="normal"
+                        variant="outlined"
+                        className={classes.textFieldRoot}
+                        required={true}
+                    />
+                </Box>
+
+                <Box className={classes.rowRoot}>
+                    <FormLabel component="legend" className={classes.labelRoot}>
+                        {<IntlMessages id="signup.user.withdraw_password"/>}
+                    </FormLabel>
+                    <TextField
+                        fullWidth
+                        onChange={event => setWithdrawPassword(event.target.value)}
+                        defaultValue={withdrawPassword}
                         margin="normal"
                         variant="outlined"
                         className={classes.textFieldRoot}

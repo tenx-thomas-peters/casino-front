@@ -5,22 +5,20 @@ import {NotificationManager} from 'react-notifications';
 import axios from '../../config';
 
 const JWTAuth = {
-    onRegister: (id, name, nickname, password, referralCode) => {
+    onRegister: (id, nickname, password, referralCode, phoneNumber, bankName, bankNumber, accountHolder, withdrawPassword) => {
         return dispatch => {
             dispatch(fetchStart());
-            console.log({
-                id: id,
-                name: name,
-                nickname: nickname,
-                password: password,
-                referral_code: referralCode,
-            });
             axios
                 .post('auth/register', {
                     id: id,
-                    name: name,
                     nickname: nickname,
                     password: password,
+                    referralCode: referralCode,
+                    phoneNumber: phoneNumber,
+                    bankName: bankName,
+                    bankNumber: bankNumber,
+                    accountHolder: accountHolder,
+                    withdrawPassword: withdrawPassword
                 })
                 .then(({data}) => {
                     if (data.success) {
@@ -33,7 +31,7 @@ const JWTAuth = {
                         dispatch(fetchSuccess());
                         // dispatch(JWTAuth.getAuthUser(true, data.result.token));
                         
-                        window.location.href = '/user/home';
+                        // window.location.href = '/user/home';
                     } else {
                         NotificationManager.error(data.message, 'SignUp');
                         dispatch(fetchError(data.error));
