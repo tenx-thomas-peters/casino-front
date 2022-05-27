@@ -250,7 +250,9 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
             setReferralCodeError(true);
         } else {
             setReferralCodeError(false);
-            setIsRecommeded(true);
+            // setIsRecommeded(true);
+            localStorage.setItem('referralCode', referralCode.trim())
+            window.location.href = '/user/register';
         }
     };
 
@@ -262,7 +264,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
         }
     }, []);
 
-    // dragon_5
+    // dragon
     useEffect(() => {
         if (!authUser && localStorage.getItem('signinPopupFlag') == "true") {
             setSigninOpen(true);
@@ -737,7 +739,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                 </DialogContent>
             </Dialog>
 
-            {/* dragon_5 */}
+            {/* dragon */}
             <Dialog className={classes.signUpModal} fullScreen={fullScreen} open={signinOpen} onClose={handleClose} aria-labelledby="responsive-dialog-title">
                 <DialogTitle id="responsive-dialog-title" style={{padding: '0'}}>
                     <span onClick={handleClose}><CloseIcon /></span>

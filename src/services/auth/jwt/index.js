@@ -5,9 +5,15 @@ import {NotificationManager} from 'react-notifications';
 import axios from '../../config';
 
 const JWTAuth = {
-    onRegister: ({id, name, nickname, password}) => {
+    onRegister: (id, name, nickname, password) => {
         return dispatch => {
             dispatch(fetchStart());
+            console.log({
+                id: id,
+                name: name,
+                nickname: nickname,
+                password: password,
+            });
             axios
                 .post('auth/register', {
                     id: id,
@@ -25,6 +31,8 @@ const JWTAuth = {
                         // axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token.access_token;
                         dispatch(fetchSuccess());
                         dispatch(JWTAuth.getAuthUser(true, data.result.token));
+                        
+                        window.location.href = '/user/home';
                     } else {
                         NotificationManager.error(data.message, 'SignUp');
                         dispatch(fetchError(data.error));
@@ -78,7 +86,6 @@ const JWTAuth = {
 
     onLogout: () => {
         let token = localStorage.getItem('token');
-console.log("draogn---", token);
         return dispatch => {
             dispatch(fetchStart());
             axios

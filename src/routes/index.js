@@ -6,6 +6,7 @@ import Signup from './Auth/Register';
 import ForgotPassword from './Auth/ForgotPassword';
 import TourGuide from './TourGuide';
 import UserHome from './components/Home';
+import UserRegister from './components/Register';
 import Deposit from './components/Deposit';
 import Withdraw from './components/Withdraw';
 import Notice from './components/Notice';
@@ -31,6 +32,7 @@ const Routes = () => {
                 <Route path="/signup" component={Signup}/>
                 <Route path="/forgot-password" component={ForgotPassword}/>
                 <Route path="/user/home" component={UserHome}/>
+                <Route path="/user/register" component={UserRegister}/>
                 <Route path="/user/slot" component={
                     () => <Slot gameType={CommonConstants.gameTypeSlot} categoryList={gameData.category.slot} />
                 }/>

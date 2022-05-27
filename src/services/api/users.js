@@ -17,7 +17,7 @@ const UserAPI = {
                     let topRanking = result.topRanking;
                     let inlineNotice = result.inlineNotice;
                     let popupNotice = result.popupNotice;
-                    // dragon_2
+                    // dragon
                     let baccaratCheck = JSON.parse(result.baccaratCheck);
                     let slotCheck = JSON.parse(result.slotCheck);
                     let token = result.token;

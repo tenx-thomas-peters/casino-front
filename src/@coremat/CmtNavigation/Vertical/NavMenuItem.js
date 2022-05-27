@@ -107,7 +107,7 @@ const NavMenuItem = props => {
         }
     }
 
-    // dragon_5
+    // dragon
     const getLink = () => {
         if (link == '/user/home') {
             return link;
