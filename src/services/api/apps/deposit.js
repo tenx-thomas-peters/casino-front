@@ -10,6 +10,7 @@ const DepositAPI = {
                         {params: {
                             memberSeq: memberSeq, 
                             operationType: operationType,
+                            reasonType: 0,
                             pageNo: pageNo,
                             pageSize: pageSize
                         }});

@@ -3,7 +3,7 @@ import service from '../../config';
 const WithdrawalAPI = {
     getWithdrawalList: async ({memberSeq, operationType, pageNo, pageSize}) => {
         return await service.get('getMonthMoneyHistory', {
-            params: {memberSeq: memberSeq, operationType: operationType, pageNo: pageNo, pageSize: pageSize}}
+            params: {memberSeq: memberSeq, operationType: operationType, reasonType:1, pageNo: pageNo, pageSize: pageSize}}
         );
     },
 
