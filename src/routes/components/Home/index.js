@@ -42,13 +42,6 @@ const UserHome = () => {
     const [popupList, setPopupList] = useState([]);
     const todayString = moment(new Date()).format("YYYY-MM-DD");
 
-    const setJackpot = () => {
-        let commonInfo = localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null;
-        if (commonInfo) {
-            setJackpotAmount(commonInfo.jackpotAmount);
-        }
-    };
-
     const handleChange = (event, item) => {
         let popupDateInfo = localStorage.getItem('popupDateInfo') ? JSON.parse(localStorage.getItem('popupDateInfo')) : {};
         if (event.target.checked) {
@@ -69,6 +62,14 @@ const UserHome = () => {
     }
 
     useEffect(() => {
+
+        let initData = localStorage.getItem('initData') ? JSON.parse(localStorage.getItem('initData')) : null;
+        if(initData){
+            setRecentNotice(initData.recentNotice);
+            setRecentEvent(initData.recentEvent);
+            setRecentWithdraw(initData.recentWithdraw);
+            setJackpotAmount(initData.jackpotAmount);
+        }
         // dragon
         NoticeAPI.getPopupList()
             .then(res => {
@@ -90,26 +91,6 @@ const UserHome = () => {
             .catch(function (err) {
             });
     }, [])
-
-    useEffect(() => {
-        setJackpot();
-        let interval;
-        if (authUser) {
-             interval = setInterval(() => {
-                setJackpot();
-
-                HomeAPI.getHomeInfo()
-                    .then(res => {
-                        if (res.data.success) {
-                            setRecentNotice(res.data.result.notice);
-                            setRecentEvent(res.data.result.event);
-                            setRecentWithdraw(res.data.result.withdraw);
-                        }
-                    });
-            }, 5000);
-        }
-        return () => clearInterval(interval);
-    }, [jackpotAmount, authUser]);
 
     return (
         <PageContainer heading="Home">

@@ -16,6 +16,7 @@ import defaultContext from '../../../contextProvider/AppContextProvider/defaultC
 import UserAPI from '../../../../../services/api/users';
 import {AuthMethods} from '../../../../../services/auth';
 import {CurrentAuthMethod} from '../../../../constants/AppConstants';
+import HomeAPI from "../../../../../services/api/apps/home";
 
 let layoutOptions = {
     headerType: defaultContext.headerType,
@@ -40,11 +41,11 @@ const VerticalDefault = ({children}) => {
     const [sidebarShow, setSidebarShow] = useState(true);
     const [footerShow, setFooterShow] = useState(true);
 
-    const getUserInfo = () => {
+    const getUserInfo = (apiCount) => {
+        console.log(apiCount);
         let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
         let memberSeq = userInfo && userInfo.seq ? userInfo.seq : '';
-        console.log(memberSeq);
-        UserAPI.getUserInfo({memberSeq});
+        UserAPI.getUserInfo({memberSeq}, {apiCount});
 
         // dragon
         let info = localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null;
@@ -58,6 +59,23 @@ const VerticalDefault = ({children}) => {
         
         setCommonInfo(info);
     };
+
+    const getInitialData = () =>{
+        HomeAPI.getInitialData()
+            .then(res => {
+                if (res.data.success) {
+                    const initData = {
+                        'recentNotice': res.data.result.notice,
+                        'recentEvent': res.data.result.event,
+                        'recentWithdraw': res.data.result.withdraw,
+                        'jackpotAmount': res.data.result.jackpotAmount,
+                        'houseMoney': res.data.result.houseMoney,
+                        'topRanking': res.data.result.topRanking,
+                    }
+                    localStorage.setItem("initData", JSON.stringify(initData));
+                }
+            });
+    }
 
     // const {authUser} = useSelector(({auth}) => auth);
     // // dragon
@@ -80,14 +98,16 @@ const VerticalDefault = ({children}) => {
         }
 
         let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-
-        // if (userInfo) {
-            getUserInfo(userInfo && userInfo.seq ? userInfo.seq : '');
-
+        getInitialData();
+        if (userInfo && userInfo.seq) {
+            console.log("userInfo.seq");
+            console.log(userInfo.seq);
+            let apiCount = 0;
             var intervalHandler = setInterval(() => {
-                getUserInfo();
+                apiCount++;
+                getUserInfo(apiCount);
             }, 5000);
-        // }
+        }
 
         // let intervalHandler = setInterval(() => {
         //     let token = localStorage.getItem('token');

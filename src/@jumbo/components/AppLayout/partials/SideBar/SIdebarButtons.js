@@ -132,7 +132,7 @@ const items = [
     },
 ];
 
-const SidebarButtons = ({commonInfo}) => {
+const SidebarButtons = ({}) => {
     const {sidebarTheme} = useContext(SidebarThemeContext);
     const classes = useStyles({sidebarTheme});
 
@@ -141,13 +141,13 @@ const SidebarButtons = ({commonInfo}) => {
     const [topRankingAmount, setTopRankingAmount] = useState(0);
 
     useEffect(() => {
-        if (commonInfo) {
-
-            setHouseMoney(commonInfo.houseMoney);
-            setTopRankingMember(commonInfo.topRanking.topMember);
-            setTopRankingAmount(commonInfo.topRanking.moneyAmount);
+        let initData = localStorage.getItem('initData') ? JSON.parse(localStorage.getItem('initData')) : null;
+        if (initData !== {}) {
+            setHouseMoney(initData.houseMoney);
+            setTopRankingMember(initData.topRanking.topMember);
+            setTopRankingAmount(initData.topRanking.moneyAmount);
         }
-    }, [commonInfo]);
+    }, []);
 
     return (
         <List className={classes.list} disablePadding>
