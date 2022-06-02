@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CmtVertical = props => {
-    const {menuItems, commonInfo} = props;
+    const {menuItems} = props;
     const classes = useStyles();
 
     return (

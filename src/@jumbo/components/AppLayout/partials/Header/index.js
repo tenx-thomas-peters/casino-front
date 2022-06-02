@@ -38,6 +38,7 @@ import HomeAPI from '../../../../../services/api/apps/home';
 
 import axios from "axios";
 import gameService from '../../../../../services/gameConfig';
+import UserAPI from "../../../../../services/api/users";
 
 const LinkRouter = props => <Link {...props} component={RouterLink}/>;
 
@@ -198,7 +199,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Header = ({method = CurrentAuthMethod, commonInfo}) => {
+const Header = ({method = CurrentAuthMethod}) => {
 
     const {authUser, signinPopup} = useSelector(({auth}) => auth);
     const classes = useStyles();
@@ -256,12 +257,44 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
         }
     };
 
+    const getUserInfo = (memberSeq, apiCount) => {
+        UserAPI.getUserInfo({memberSeq}, {apiCount})
+            .then((res) => {
+                if (res.data.success) {
+                    let result = res.data.result;
+                    setInlineNotice(result.inlineNotice);
+                    setNoteCounts(result.noteCounts);
+                    setMoneyAmount(result.moneyAmount);
+                    setCasinoMoney(result.casinoMoney);
+                    setMileageAmount(result.mileageAmount);
+
+                    let accessToken = localStorage.getItem('token');
+                    let token = result.token;
+                    if (token != null && token !== '' && `${accessToken}` !== `${token}`) {
+                        dispatch(AuthMethods[CurrentAuthMethod].onLogout());
+                    }
+                    localStorage.setItem("token", token);
+                }
+            });
+    };
+
     let totalMoney = 0;
     useEffect(() => {
         let userInfo = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
-        if (userInfo) {
+        if (userInfo && userInfo.seq) {
             setMember(userInfo);
+
+            let memberSeq = userInfo && userInfo.seq ? userInfo.seq : '';
+            let apiCount = 0;
+            var intervalHandler = setInterval(() => {
+                apiCount++;
+                getUserInfo(memberSeq, apiCount);
+            }, 5000);
         }
+
+        return () => {
+            clearTimeout(intervalHandler);
+        };
     }, []);
 
     // dragon
@@ -273,14 +306,6 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
     }, [localStorage.getItem('signinPopupFlag')]);
 
     useEffect(() => {
-        if (commonInfo) {
-            setInlineNotice(commonInfo.inlineNotice);
-            setNoteCounts(commonInfo.noteCounts);
-            setMoneyAmount(commonInfo.moneyAmount);
-            setCasinoMoney(commonInfo.casinoMoney);
-            setMileageAmount(commonInfo.mileageAmount);
-            setPopupNotice(commonInfo.popupNotice);
-
             if (!isPopupShowed) {
                 setIsPopupShowed(localStorage.getItem("hidePopup") === "true" ? true : false);
             }
@@ -289,8 +314,7 @@ const Header = ({method = CurrentAuthMethod, commonInfo}) => {
                 setIsPopupShowed(true);
                 setPopupOpen(true);
             }
-        }
-    }, [commonInfo]);
+    }, []);
 
     const logout = (event) => {
         event.preventDefault();

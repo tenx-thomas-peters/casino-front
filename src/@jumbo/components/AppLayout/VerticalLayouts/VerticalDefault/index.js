@@ -36,45 +36,13 @@ const VerticalDefault = ({children}) => {
     const location = useLocation();
     const dispatch = useDispatch();
 
-    const [commonInfo, setCommonInfo] = useState();
     const [headerShow, setHeaderShow] = useState(true);
     const [sidebarShow, setSidebarShow] = useState(true);
     const [footerShow, setFooterShow] = useState(true);
 
-    const getUserInfo = (apiCount) => {
-        console.log(apiCount);
-        let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
-        let memberSeq = userInfo && userInfo.seq ? userInfo.seq : '';
-        UserAPI.getUserInfo({memberSeq}, {apiCount});
-
-        // dragon
-        let info = localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null;
-        if (info != null) {
-            let accessToken = localStorage.getItem('token');
-            let token = info.token;
-            if (token != null && token != '' && `${accessToken}` != `${token}`) {
-                dispatch(AuthMethods[CurrentAuthMethod].onLogout());
-            }
-        }
-        
-        setCommonInfo(info);
-    };
 
     const getInitialData = () =>{
-        HomeAPI.getInitialData()
-            .then(res => {
-                if (res.data.success) {
-                    const initData = {
-                        'recentNotice': res.data.result.notice,
-                        'recentEvent': res.data.result.event,
-                        'recentWithdraw': res.data.result.withdraw,
-                        'jackpotAmount': res.data.result.jackpotAmount,
-                        'houseMoney': res.data.result.houseMoney,
-                        'topRanking': res.data.result.topRanking,
-                    }
-                    localStorage.setItem("initData", JSON.stringify(initData));
-                }
-            });
+        HomeAPI.getInitialData();
     }
 
     // const {authUser} = useSelector(({auth}) => auth);
@@ -97,27 +65,8 @@ const VerticalDefault = ({children}) => {
             layoutOptions.sidebarWidth = 0;
         }
 
-        let userInfo = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
         getInitialData();
-        if (userInfo && userInfo.seq) {
-            console.log("userInfo.seq");
-            console.log(userInfo.seq);
-            let apiCount = 0;
-            var intervalHandler = setInterval(() => {
-                apiCount++;
-                getUserInfo(apiCount);
-            }, 5000);
-        }
 
-        // let intervalHandler = setInterval(() => {
-        //     let token = localStorage.getItem('token');
-        //     dispatch(AuthMethods[CurrentAuthMethod].getAuthUser(true, token));
-        //     setCommonInfo(localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null);
-        // }, 3000);
-
-        return () => {
-            clearTimeout(intervalHandler);
-        };
     }, [location.pathname, dispatch]);
 
     return (
@@ -127,7 +76,7 @@ const VerticalDefault = ({children}) => {
             header={
                 headerShow ?
                     <CmtHeader>
-                        <Header commonInfo={commonInfo}/>
+                        <Header/>
                     </CmtHeader>
                     : ''
             }
@@ -135,7 +84,7 @@ const VerticalDefault = ({children}) => {
                 sidebarShow ?
                     <CmtSidebar>
                         <SidebarHeader/>
-                        <SideBar commonInfo={commonInfo}/>
+                        <SideBar/>
                     </CmtSidebar>
                     : ''
             }

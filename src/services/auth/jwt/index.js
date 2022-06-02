@@ -109,7 +109,6 @@ const JWTAuth = {
 
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            localStorage.removeItem('commonInfo');
 
             dispatch(setAuthUser(null));
         };
@@ -132,7 +131,7 @@ const JWTAuth = {
                     .then(({data}) => {
                         if (data.result) {
                             // dispatch(fetchSuccess());
-                            JWTAuth.setCommonInfo(data.result);
+                            // JWTAuth.setCommonInfo(data.result);
 
                             localStorage.setItem('user', JSON.stringify(data.result.userInfo));
 
@@ -164,26 +163,6 @@ const JWTAuth = {
     getSocialMediaIcons: () => {
         return <React.Fragment> </React.Fragment>;
     },
-
-    setCommonInfo: (result) => {
-        let noteCounts = result.noteCounts;
-        let moneyAmount = result.moneyAmount;
-        let casinoMoney = result.casinoMoney;
-        let mileageAmount = result.mileageAmount;
-        let houseMoney = result.houseMoney;
-        let topRanking = result.topRanking;
-
-        const commonInfo = {
-            'noteCounts': noteCounts,
-            'moneyAmount': moneyAmount,
-            'casinoMoney': casinoMoney,
-            'mileageAmount': mileageAmount,
-            'houseMoney': houseMoney,
-            'topRanking': topRanking
-        };
-
-        localStorage.setItem("commonInfo", JSON.stringify(commonInfo));
-    }
 };
 
 export default JWTAuth;

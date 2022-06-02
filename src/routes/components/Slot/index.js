@@ -30,16 +30,16 @@ const Slot = ({gameType, categoryList}) => {
     const [jackpotAmount, setJackpotAmount] = useState(0);
 
     const setJackpot = () => {
-        let commonInfo = localStorage.getItem('commonInfo') ? JSON.parse(localStorage.getItem('commonInfo')) : null;
-        if (commonInfo) {
-            setJackpotAmount(commonInfo.jackpotAmount);
+        let initData = localStorage.getItem('initData') ? JSON.parse(localStorage.getItem('initData')) : null;
+        if (initData) {
+            setJackpotAmount(initData.jackpotAmount);
         }
     };
 
     // dragon
     useEffect(() => {
-        let commonInfo = localStorage.getItem('commonInfo');
-        if (commonInfo == null || commonInfo == '') {
+        let userInfo = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        if (userInfo == null || userInfo == '') {
             localStorage.setItem('need_login_popup', true);
             window.location.href = '/user/home';
         }

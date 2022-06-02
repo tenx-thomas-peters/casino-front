@@ -26,13 +26,13 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-const SideBar = ({commonInfo}) => {
+const SideBar = () => {
     const classes = useStyles();
 
     return (
         <PerfectScrollbar className={classes.perfectScrollbarSidebar}>
             <CmtVertical menuItems={sidebarNavs}/>
-            <SidebarButtons commonInfo={commonInfo}/>
+            <SidebarButtons/>
         </PerfectScrollbar>
     );
 };
