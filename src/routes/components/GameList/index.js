@@ -150,23 +150,6 @@ const GameList = () => {
                 .catch(function (err) {
                     NotificationManager.error(err.message, 'Error');
                 });
-            
-
-            // axios.patch('/user/refresh-token', {params: {username: user.name}})
-            //     .then(res => {
-            //         if (res.status === 200) {
-            //             axios.get('/get-game-url', {params: {id: id, token: res.data.token}})
-            //                 .then(res => {
-            //                     console.log(res);
-            //                 })
-            //                 .catch(function (err) {
-            //                     NotificationManager.error(err, 'Error');
-            //                 });
-            //         }
-            //     })
-            //     .catch(function (err) {
-            //         NotificationManager.error(err, 'Error');
-            //     });
         } else {
             NotificationManager.error('Please Sign in first', 'Error');
         }
@@ -193,7 +176,6 @@ const GameList = () => {
     return (
         <PageContainer>
             <Box className={classes.header}>
-                {/*<CmtImage src={'/images/game/game_list_header.png'} style={{width: '100%'}} />*/}
                 <Typography component={'h4'} style={{textTransform: 'lowercase'}}>
                     {vendor}&nbsp;<IntlMessages id={'game.list.play'}/>
                 </Typography>

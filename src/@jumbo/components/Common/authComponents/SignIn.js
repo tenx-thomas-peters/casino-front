@@ -68,39 +68,7 @@ const SignIn = ({method = CurrentAuthMethod, variant = 'default', wrapperVariant
     const classes = useStyles({variant});
 
     const onSubmit = () => {
-        // TODO
-        // game api - /user/refresh-token
-        /**
-         * game server api = /user/refresh-token
-         */
-        /*
-        gameService.patch('/user/refresh-token')
-            .then(res => {
-                if (res.status === 200) {
-                    localStorage.setItem('server_token', res.token);
-                    dispatch(AuthMethods[method].onLogin(name, password));
-                } else {
-                    NotificationManager.error(res.errors.username, 'Error');
-                }
-            })
-            .catch(function (err) {
-                NotificationManager.error(err.message, 'Error');
-            });
-        */
-
-        // axios.patch('/user/refresh-token', {params: {username: name}})
-        //     .then(res => {
-        //         if (res.status === 200) {
-        //             localStorage.setItem('server_token', res.data.token);
-                    dispatch(AuthMethods[method].onLogin(name, password));
-            //     } else {
-            //         NotificationManager.error(res.errors.username, 'Error');
-            //     }
-            // })
-            // .catch(function (err) {
-            //     NotificationManager.error(err.message, 'Error');
-            // });
-
+        dispatch(AuthMethods[method].onLogin(name, password));
     };
 
     return (

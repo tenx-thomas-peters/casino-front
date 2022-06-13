@@ -23,15 +23,7 @@ const JWTAuth = {
                 .then(({data}) => {
                     if (data.success) {
                         NotificationManager.success(data.message, 'SignUp');
-
-                        // localStorage.setItem('token', data.result.token);
-                        // localStorage.setItem('user', JSON.stringify(data.result.userInfo));
-
-                        // axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token.access_token;
                         dispatch(fetchSuccess());
-                        // dispatch(JWTAuth.getAuthUser(true, data.result.token));
-                        
-                        // window.location.href = '/user/home';
                     } else {
                         NotificationManager.error(data.message, 'SignUp');
                         dispatch(fetchError(data.error));
@@ -92,12 +84,7 @@ const JWTAuth = {
                     token: `${token}`,
                 })
                 .then(({data}) => {
-                    if (data.success) {
-                        // dispatch(fetchSuccess());
-                        // localStorage.removeItem('token');
-                        // localStorage.removeItem('user');
-                        // dispatch(setAuthUser(null));
-                    } else {
+                    if (data.success) {} else {
                         // dispatch(fetchError(data.error));
                     }
                 })

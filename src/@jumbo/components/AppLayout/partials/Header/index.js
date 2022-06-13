@@ -340,39 +340,7 @@ const Header = ({method = CurrentAuthMethod}) => {
             NotificationManager.error('Please input required field', 'Error');
             return;
         }
-
-        // TODO
-        // game api - /user/refresh-token
-        /**
-         * game server api = /user/refresh-token
-         */
-        /*
-        gameService.patch('/user/refresh-token')
-            .then(res => {
-                if (res.status === 200) {
-                    localStorage.setItem('server_token', res.token);
-                    dispatch(AuthMethods[method].onLogin(name, password));
-                } else {
-                    NotificationManager.error(res.errors.username, 'Error');
-                }
-            })
-            .catch(function (err) {
-                NotificationManager.error(err.message, 'Error');
-            });
-        */
-
-        // axios.patch('/user/refresh-token', {params: {username: id}})
-        //     .then(res => {
-        //         if (res.status === 200) {
-        //             localStorage.setItem('server_token', res.data.token);
-                    dispatch(AuthMethods[method].onLogin(id, password));
-            //     } else {
-            //         NotificationManager.error(res.errors.username, 'Error');
-            //     }
-            // })
-            // .catch(function (err) {
-            //     NotificationManager.error(err.message, 'Error');
-            // });
+        dispatch(AuthMethods[method].onLogin(id, password));
     };
 
     const popupLogin = () => {

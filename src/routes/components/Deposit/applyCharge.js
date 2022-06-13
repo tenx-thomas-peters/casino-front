@@ -276,48 +276,15 @@ const DepositApplyCharge = () => {
 
         if (authUser && userInfo) {
             if (requestAmount > 0) {
-                // TODO
-                // game api - /user/add-balance
-                
-                // gameService.post('/user/add-balance', {params: {username: userInfo.name, amount: requestAmount}})
-                //     .then(res => {
-                //         if (res.status === 200) {
-                            // let params = {receiver: userInfo.seq, actualAmount: res.data.amount, note: depositer};
-                            let params = {receiver: userInfo.seq, actualAmount: requestAmount, note: depositer};
+                let params = {receiver: userInfo.seq, actualAmount: requestAmount, note: depositer};
 
-                            DepositAPI.applyCharge({params}).then(res => {
-                                if (res.data.success) {
-                                    NotificationManager.success(res.data.message, 'Success!');
-                                    resetApplyCharge();
-                                    getDepositList();
-                                }
-                            });
-                    //     } else if (res.status === 403) {
-                    //         NotificationManager.error(res.message, 'Error');
-                    //     }
-                    // })
-                    // .catch(function (err) {
-                    //     NotificationManager.error(err.message, 'Error');
-                    // });
-                
-                // axios.post('/user/add-balance', {username: userInfo.name, amount: requestAmount})
-                //     .then(res => {
-                //         if (res.status === 200) {
-                            // let params = {receiver: userInfo.seq, actualAmount: requestAmount, note: depositer};
-                            // DepositAPI.applyCharge({params}).then(res => {
-                            //     if (res.data.success) {
-                            //         NotificationManager.success(res.data.message, 'Success!');
-                            //         resetApplyCharge();
-                            //         getDepositList();
-                            //     }
-                            // });
-                    //     } else if (res.status === 403) {
-                    //         NotificationManager.error(res.data.message, 'Error');
-                    //     }
-                    // })
-                    // .catch(function (err) {
-                    //     NotificationManager.error(err.message, 'Error');
-                    // });
+                DepositAPI.applyCharge({params}).then(res => {
+                    if (res.data.success) {
+                        NotificationManager.success(res.data.message, 'Success!');
+                        resetApplyCharge();
+                        getDepositList();
+                    }
+                });
             } else {
                 NotificationManager.error("Please input request amount or depositer.", 'Error');
             }

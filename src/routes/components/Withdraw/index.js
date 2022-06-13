@@ -243,73 +243,21 @@ const Withdraw = () => {
             if (firstMoney === 0) {
                 NotificationManager.success('Please insert your money', 'Error');
             } else {
-                // /user/sub-balance process
-                let withdrawInfo = {
-                    username: userInfo.name,
-                    amount: firstMoney
-                };
+                WithdrawalAPI.addWithdrawal({moneyHistory})
+                    .then(res => {
+                        if (res.data.success === false) {
+                            NotificationManager.error(res.data.message, 'Error');
+                        } else if (res.data.success === true) {
+                            NotificationManager.success(res.data.message, 'Success');
 
-                // TODO
-                // game api - /user/sub-balance
-                //
-                // gameService.post('/user/sub-balance', {params: withdrawInfo})
-                //     .then(res => {
-                //         if (res.status === 200) {
-                            WithdrawalAPI.addWithdrawal({moneyHistory})
-                                .then(res => {
-                                    if (res.data.success === false) {
-                                        NotificationManager.error(res.data.message, 'Error');
-                                    } else if (res.data.success === true) {
-                                        NotificationManager.success(res.data.message, 'Success');
+                            setFirstMoney(0);
+                            getWithdrawalList(pageNo, pageSize);
+                        }
+                    })
+                    .catch(function (err) {
+                        NotificationManager.error(err.message, 'Error');
+                    });
 
-                                        setFirstMoney(0);
-                                        getWithdrawalList(pageNo, pageSize);
-                                    }
-                                })
-                                .catch(function (err) {
-                                    NotificationManager.error(err.message, 'Error');
-                                });
-                    //     } else {
-                    //         NotificationManager.error(res.data.message, 'Error');
-                    //     }
-                    // })
-                    // .catch(function (err) {
-                    //     NotificationManager.error(err.message, 'Error');
-                    // });
-
-
-                // axios.post('/user/sub-balance', {withdrawInfo})
-                //     .then(res => {
-                //         if (res.status === 200) {
-                //             WithdrawalAPI.addWithdrawal({moneyHistory})
-                //                 .then(res => {
-                //                     if (res.data.success === false) {
-                //                         NotificationManager.error(res.data.message, 'Error');
-                //                     } else if (res.data.success === true) {
-                //                         NotificationManager.success(res.data.message, 'Success');
-                //
-                //                         setFirstMoney(0);
-                //                         getWithdrawalList(pageNo, pageSize);
-                //                     }
-                //                 })
-                //                 .catch(function (err) {
-                //                     NotificationManager.error(err.message, 'Error');
-                //                 });
-                //         }
-                //     });
-
-                // TODO
-                // game api - /user/sub-balance-all
-                // /user/sub-balance-all process
-                /*let withdrawInfo = {
-                    username: userInfo.name
-                };
-                axios.post('/user/sub-balance-all', {withdrawInfo}).then(res => {
-                    if (res.status === 200) {
-                        console.log(res)
-                        console.log("success");
-                    }
-                });*/
             }
         } else {
             NotificationManager.error('Please login first', 'Error');
