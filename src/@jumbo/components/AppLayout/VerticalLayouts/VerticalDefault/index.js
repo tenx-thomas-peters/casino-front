@@ -35,14 +35,19 @@ let layoutOptions = {
 const VerticalDefault = ({children}) => {
     const location = useLocation();
     const dispatch = useDispatch();
-
-    const [headerShow, setHeaderShow] = useState(true);
-    const [sidebarShow, setSidebarShow] = useState(true);
-    const [footerShow, setFooterShow] = useState(true);
+    const [headerShow, setHeaderShow] = useState(false);
+    const [sidebarShow, setSidebarShow] = useState(false);
+    const [footerShow, setFooterShow] = useState(false);
+    const [restContentShow, setRestContentShow] = useState(false);
 
 
     const getInitialData = () =>{
-        HomeAPI.getInitialData();
+        HomeAPI.getInitialData().then(r => {
+            setHeaderShow(true);
+            setSidebarShow(true);
+            setFooterShow(true);
+            setRestContentShow(true);
+        });
     }
 
     // const {authUser} = useSelector(({auth}) => auth);
@@ -56,16 +61,16 @@ const VerticalDefault = ({children}) => {
     // }, [authUser]);
 
     useEffect(() => {
+        getInitialData();
         if (location.pathname.indexOf('/user') < 0 && location.pathname !== '/') {
             setHeaderShow(false);
             setSidebarShow(false);
             setFooterShow(false);
+            setRestContentShow(false);
 
             layoutOptions.isSidebarFixed = false;
             layoutOptions.sidebarWidth = 0;
         }
-
-        getInitialData();
 
     }, [location.pathname, dispatch]);
 
@@ -96,7 +101,7 @@ const VerticalDefault = ({children}) => {
                     : ''
             }>
             <CmtContent>
-                {children}
+                {restContentShow?children:''}
                 <Customizer/>
                 <ContentLoader/>
             </CmtContent>

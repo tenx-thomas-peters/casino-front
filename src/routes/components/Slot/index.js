@@ -31,7 +31,7 @@ const Slot = ({gameType, categoryList}) => {
 
     const setJackpot = () => {
         let initData = localStorage.getItem('initData') ? JSON.parse(localStorage.getItem('initData')) : null;
-        if (initData) {
+        if (initData !== {} && initData !== "" && initData !== null) {
             setJackpotAmount(initData.jackpotAmount);
         }
     };

@@ -64,7 +64,7 @@ const UserHome = () => {
     useEffect(() => {
 
         let initData = localStorage.getItem('initData') ? JSON.parse(localStorage.getItem('initData')) : null;
-        if(initData){
+        if(initData !== {} && initData !== "" && initData !== null){
             setRecentNotice(initData.recentNotice);
             setRecentEvent(initData.recentEvent);
             setRecentWithdraw(initData.recentWithdraw);
